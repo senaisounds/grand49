@@ -2,10 +2,23 @@
 // GRAND49 site content. Everything editable lives in this one file.
 // ─────────────────────────────────────────────────────────────────────────────
 
+/** Official manager. While BOOKING_EMAIL is TBD, "DM Abel on Instagram" is the primary booking contact. */
+export const MANAGER = {
+  name: "Abel",
+  handle: "@_abel._b_",
+  instagram: "https://www.instagram.com/_abel._b_/",
+};
+
+/** Credits shown in the Hood section, booking section and footer. `href` makes the name a link. */
+export const CREDITS: { role: string; name: string; href?: string }[] = [
+  { role: "Management", name: MANAGER.name, href: MANAGER.instagram },
+  { role: "DJ", name: "Senai" },
+];
+
 /**
  * BOOKING EMAIL — PLACEHOLDER. Replace with the real address, e.g. "booking@grand49.com".
- * While it still contains "TBD", the site shows it as a placeholder and the
- * booking / notify buttons fall back to the YouTube channel instead of a mailto link.
+ * While it still contains "TBD", the site shows it as a placeholder, the primary booking button is
+ * "DM Abel on Instagram", and the merch "Notify me" buttons link to Abel's Instagram instead of a mailto link.
  */
 export const BOOKING_EMAIL = "booking@ — TBD";
 export const BOOKING_READY = !BOOKING_EMAIL.includes("TBD");
@@ -22,7 +35,6 @@ export const BRAND = {
   cityAm: "አዲስ አበባ",
   description:
     "We deliver timebending music for the fans, Subscribe to discover the next wave of Talent from GRAND49 HOOD.",
-  djCredit: "DJ / Management: Senai",
 };
 
 export const LINKS = {

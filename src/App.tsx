@@ -8,6 +8,8 @@ import {
   BOOKING_EMAIL,
   BOOKING_READY,
   BRAND,
+  CREDITS,
+  MANAGER,
   HERO_IMAGE,
   LINKS,
   MERCH,
@@ -317,7 +319,7 @@ function Hood() {
           </li>
         ))}
       </ol>
-      <p className="mono hood-dj">{BRAND.djCredit}</p>
+      <p className="mono hood-dj"><Credits /></p>
     </section>
   );
 }
@@ -400,7 +402,7 @@ function Drop() {
         {MERCH.map((m, i) => {
           const notify = BOOKING_READY
             ? `mailto:${BOOKING_EMAIL}?subject=${encodeURIComponent(`Notify me: ${m.name}`)}`
-            : LINKS.youtubeSubscribe;
+            : MANAGER.instagram;
           return (
             <article key={m.name} className="merch" data-reveal style={{ ["--d" as string]: `${i * 80}ms` }}>
               <div className="merch-art">
@@ -414,13 +416,31 @@ function Drop() {
                 <a className="btn btn-line" href={notify} target={BOOKING_READY ? undefined : "_blank"} rel="noopener noreferrer">
                   Notify me
                 </a>
-                {!BOOKING_READY && <p className="mono merch-via">Subscribe on YouTube for the drop</p>}
+                {!BOOKING_READY && <p className="mono merch-via">DM {MANAGER.name} on Instagram for the drop</p>}
               </div>
             </article>
           );
         })}
       </div>
     </section>
+  );
+}
+
+function Credits({ className = "" }: { className?: string }) {
+  return (
+    <span className={`credits ${className}`}>
+      {CREDITS.map((c, i) => (
+        <span key={c.role}>
+          {i > 0 && <span className="credits-sep" aria-hidden> · </span>}
+          {c.role}:{" "}
+          {c.href ? (
+            <a className="link-u" href={c.href} target="_blank" rel="noopener noreferrer">{c.name}</a>
+          ) : (
+            c.name
+          )}
+        </span>
+      ))}
+    </span>
   );
 }
 
@@ -441,13 +461,19 @@ function Booking() {
             {BOOKING_EMAIL} →
           </a>
         ) : (
-          <p className="booking-mail">
-            <span className="mono">{BOOKING_EMAIL}</span>
-            <span className="todo mono">Email coming soon</span>
-          </p>
+          <>
+            <a className="btn btn-red btn-xl" href={MANAGER.instagram} target="_blank" rel="noopener noreferrer">
+              DM {MANAGER.name} on Instagram →
+            </a>
+            <p className="mono booking-handle">{MANAGER.handle} · Management</p>
+            <p className="booking-mail">
+              <span className="mono">{BOOKING_EMAIL}</span>
+              <span className="todo mono">Email coming soon</span>
+            </p>
+          </>
         )}
         <div className="booking-row mono">
-          <span>{BRAND.djCredit}</span>
+          <Credits />
           <a className="link-u" href={LINKS.youtube} target="_blank" rel="noopener noreferrer">YouTube @GRAND49HOOD ↗</a>
         </div>
       </div>
@@ -467,7 +493,7 @@ function Footer() {
       </div>
       <div className="footer-row mono">
         <p>© 2026 {BRAND.name} · <span className="eth">{BRAND.tagAm}</span> · {BRAND.city}</p>
-        <p>{BRAND.djCredit}</p>
+        <p><Credits /></p>
       </div>
     </footer>
   );
