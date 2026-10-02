@@ -454,7 +454,7 @@ function Booking() {
           Book<br />
           <span className="glitch" data-text="GRAND49">GRAND49</span>
         </h2>
-        <p className="booking-p">Shows, features and press: Saint Mosses, Young CJ, Lil PPCS, Young Sura, Botla DP.</p>
+        <p className="booking-p">Shows, features and press: {ARTISTS.join(", ")}.</p>
         {BOOKING_READY ? (
           <a className="btn btn-red btn-xl" href={`mailto:${BOOKING_EMAIL}?subject=${encodeURIComponent("Booking: GRAND49")}`}>
             {BOOKING_EMAIL} →
