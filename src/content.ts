@@ -2,26 +2,22 @@
 // GRAND49 site content. Everything editable lives in this one file.
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** Official manager. While BOOKING_EMAIL is TBD, "DM Abel on Instagram" is the primary booking contact. */
-export const MANAGER = {
-  name: "Abel",
-  handle: "@_abel._b_",
-  instagram: "https://www.instagram.com/_abel._b_/",
-};
-
-/** Credits shown in the Hood section, booking section and footer. `href` makes the name a link. */
+/** Credits shown in the Hood section, booking section and footer. Add `href` to make a name a link. */
 export const CREDITS: { role: string; name: string; href?: string }[] = [
-  { role: "Management", name: MANAGER.name, href: MANAGER.instagram },
+  { role: "Management", name: "Abel" },
   { role: "DJ", name: "Senai" },
 ];
 
 /**
- * BOOKING EMAIL — PLACEHOLDER. Replace with the real address, e.g. "booking@grand49.com".
- * While it still contains "TBD", the site shows it as a placeholder, the primary booking button is
- * "DM Abel on Instagram", and the merch "Notify me" buttons link to Abel's Instagram instead of a mailto link.
+ * EMAIL DOMAIN — not chosen yet. Set it (e.g. "grand49.com") once the domain is bought and the
+ * mailbox/forwarding is set up, and the site switches on its own:
+ *   - BOOKING_EMAIL becomes "booking@<domain>"
+ *   - the booking CTA becomes a mailto: button
+ *   - the merch "Notify me" buttons become mailto: links (until then they point at the YouTube subscribe link)
  */
-export const BOOKING_EMAIL = "booking@ — TBD";
-export const BOOKING_READY = !BOOKING_EMAIL.includes("TBD");
+export const EMAIL_DOMAIN = "";
+export const BOOKING_READY = EMAIL_DOMAIN.length > 0;
+export const BOOKING_EMAIL = BOOKING_READY ? `booking@${EMAIL_DOMAIN}` : "booking@ — TBD";
 
 export const BRAND = {
   name: "GRAND49 Entertainment",

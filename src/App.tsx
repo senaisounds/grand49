@@ -9,7 +9,6 @@ import {
   BOOKING_READY,
   BRAND,
   CREDITS,
-  MANAGER,
   HERO_IMAGE,
   LINKS,
   MERCH,
@@ -402,7 +401,7 @@ function Drop() {
         {MERCH.map((m, i) => {
           const notify = BOOKING_READY
             ? `mailto:${BOOKING_EMAIL}?subject=${encodeURIComponent(`Notify me: ${m.name}`)}`
-            : MANAGER.instagram;
+            : LINKS.youtubeSubscribe;
           return (
             <article key={m.name} className="merch" data-reveal style={{ ["--d" as string]: `${i * 80}ms` }}>
               <div className="merch-art">
@@ -416,7 +415,7 @@ function Drop() {
                 <a className="btn btn-line" href={notify} target={BOOKING_READY ? undefined : "_blank"} rel="noopener noreferrer">
                   Notify me
                 </a>
-                {!BOOKING_READY && <p className="mono merch-via">DM {MANAGER.name} on Instagram for the drop</p>}
+                {!BOOKING_READY && <p className="mono merch-via">Subscribe on YouTube for the drop</p>}
               </div>
             </article>
           );
@@ -461,16 +460,10 @@ function Booking() {
             {BOOKING_EMAIL} →
           </a>
         ) : (
-          <>
-            <a className="btn btn-red btn-xl" href={MANAGER.instagram} target="_blank" rel="noopener noreferrer">
-              DM {MANAGER.name} on Instagram →
-            </a>
-            <p className="mono booking-handle">{MANAGER.handle} · Management</p>
-            <p className="booking-mail">
-              <span className="mono">{BOOKING_EMAIL}</span>
-              <span className="todo mono">Email coming soon</span>
-            </p>
-          </>
+          <p className="booking-mail">
+            <span className="mono">{BOOKING_EMAIL}</span>
+            <span className="todo mono">Email coming soon</span>
+          </p>
         )}
         <div className="booking-row mono">
           <Credits />

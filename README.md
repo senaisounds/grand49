@@ -26,7 +26,8 @@ Everything editable is in one file:
 
 | What | Constant | Notes |
 |------|----------|-------|
-| **Booking email** | `BOOKING_EMAIL` | **Placeholder: `booking@ — TBD`.** While it contains `TBD` the site shows it as "Email coming soon", and the merch "Notify me" buttons point at the YouTube subscribe link. Put a real address in and both become `mailto:` links. |
+| **Email domain / booking email** | `EMAIL_DOMAIN` | **Empty until a domain is chosen.** Set e.g. `"grand49.com"` and `BOOKING_EMAIL` becomes `booking@grand49.com`, the booking CTA turns into a `mailto:` button, and the merch "Notify me" buttons become `mailto:` links. Until then the site shows `booking@ — TBD` and "Notify me" points at the YouTube subscribe link. |
+| Credits | `CREDITS` | "Management: Abel · DJ: Senai". Add `href` to link a name. |
 | Links | `LINKS` | YouTube, subscriber count label, Spotify (artist "GRAND 49"), Instagram (empty = hidden). |
 | Tracks / videos | `TRACKS` | First entry is the featured release and the entry-gate song. `cover` overrides the YouTube thumbnail. |
 | Artists | `ARTISTS` | Typographic roster. Credits are derived from `TRACKS`. |
