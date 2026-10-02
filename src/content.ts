@@ -56,14 +56,14 @@ export type Track = {
 /** Order matters: the first track is the featured latest release and the entry-gate song. */
 export const TRACKS: Track[] = [
   { id: "uUNr6lHljXM", title: "BAD", artists: "Saint Mosses x Young CJ", note: "1.9M+ views" },
-  { id: "WHcpXfO2VAA", title: "ICON", artists: "Saint Mosses x Young CJ x Lil PPCS" },
+  { id: "WHcpXfO2VAA", title: "ICON", artists: "Saint Mosses x Young CJ x Lil PPCS x Young Sura" },
   {
     id: "miAENmjOq5c",
     title: "HELM AYCHE MATA [4 ena 9]",
     artists: "Saint Mosses x Young CJ",
     cover: "/img/helm-ayche-mata-cover.webp",
   },
-  { id: "aTF4j_7xpeA", title: "SPARTAN", artists: "Saint Mosses x Young CJ x Lil PPCS" },
+  { id: "aTF4j_7xpeA", title: "SPARTAN", artists: "Saint Mosses x Young CJ x Lil PPCS x Botla DP" },
   { id: "MNEmBgMjFN4", title: "GUNSHOT [4 ena 9]", artists: "Saint Mosses x Young CJ" },
 ];
 
@@ -71,7 +71,7 @@ export const ytThumb = (id: string, q: "hqdefault" | "maxresdefault" = "hqdefaul
   `https://i.ytimg.com/vi/${id}/${q}.jpg`;
 export const ytWatch = (id: string) => `https://www.youtube.com/watch?v=${id}`;
 
-/** Typographic artist cards (no photos). */
+/** Official members only (typographic roster, booking line). Guest features stay credited on their tracks in TRACKS. */
 export const ARTISTS = ["Saint Mosses", "Young CJ", "Lil PPCS"];
 
 /** Credits per artist, derived from TRACKS (so it stays in sync). */
