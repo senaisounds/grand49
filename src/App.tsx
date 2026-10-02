@@ -465,6 +465,12 @@ function Booking() {
             <span className="todo mono">Email coming soon</span>
           </p>
         )}
+        <p className="booking-kit">
+          <a className="btn btn-line" href={LINKS.pressKit} download="GRAND49-Press-Kit.pdf">
+            Download press kit ↓
+          </a>
+          <span className="mono booking-kit-meta">PDF · A4 · 2 pages</span>
+        </p>
         <div className="booking-row mono">
           <Credits />
           <a className="link-u" href={LINKS.youtube} target="_blank" rel="noopener noreferrer">YouTube @GRAND49HOOD ↗</a>

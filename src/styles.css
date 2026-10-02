@@ -342,6 +342,8 @@ section { position: relative; }
 .credits .link-u { color: inherit; }
 .footer-row .credits .link-u, .hood-dj .credits .link-u { color: var(--ink); }
 .todo { font-size: 10px; border: 1px dashed var(--red); color: var(--red); padding: 4px 8px; }
+.booking-kit { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin: 0 0 30px; }
+.booking-kit-meta { color: var(--mute); font-size: 11px; }
 .booking-row { display: flex; flex-wrap: wrap; gap: 14px 30px; color: var(--mute); }
 
 /* footer */

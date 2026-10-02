@@ -76,3 +76,7 @@ Everything editable is in one file:
 | Fonts: Anton, JetBrains Mono, Noto Sans Ethiopic (Fontsource) | SIL OFL 1.1 | Type |
 
 Photos and cover art © GRAND49 / the artists. Music videos are embedded from YouTube (@GRAND49HOOD).
+
+## Press kit
+
+`public/press-kit.pdf` is linked from the Booking section ("Download press kit"). It is built outside this repo in `/workspace/grand49/press-kit` (`node build.mjs`, HTML → PDF via headless Chrome). Stats are dated inside the PDF; rebuild and copy it over when numbers change. Booking email (`booking@grand49.com`) is pending in `build.mjs` until the domain is bought.

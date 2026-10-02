@@ -40,6 +40,8 @@ export const LINKS = {
   youtubeSubs: "100K",
   /** Spotify artist "GRAND 49". */
   spotify: "https://open.spotify.com/artist/0alunOGvCraapsrUo0INYc",
+  /** One-page-ish EPK (A4, 2 pages). Source + builder: /workspace/grand49/press-kit (node build.mjs), then copy to public/press-kit.pdf. */
+  pressKit: "/press-kit.pdf",
   /** No confirmed crew Instagram yet. Add the URL here and it appears in the footer. */
   instagram: "",
 };
