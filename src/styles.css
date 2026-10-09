@@ -268,6 +268,9 @@ section { position: relative; }
 .roster-row:nth-child(even) .roster-name { color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
 .roster-name { font-family: var(--display); font-size: clamp(46px, 9vw, 140px); line-height: 0.9; letter-spacing: 0.005em; position: relative; }
 .roster-credits { color: var(--mute); font-size: 11px; text-align: right; max-width: 22em; }
+.roster-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.roster-ig { color: var(--ink); font-size: 11px; text-transform: none; letter-spacing: 0.04em; text-decoration: none; border-bottom: 1px solid var(--red); padding-bottom: 2px; position: relative; z-index: 1; }
+.roster-ig:hover { color: var(--red); }
 .glitch-hover::before, .glitch-hover::after { content: attr(data-text); position: absolute; inset: 0; opacity: 0; pointer-events: none; }
 @keyframes jitter { 50% { transform: translate(-2px, 1px); } }
 .hood-dj { margin: 28px 0 0; color: var(--mute); }
@@ -385,7 +388,8 @@ section { position: relative; }
 @media (hover: hover) {
   .roster-row:hover::before { transform: scaleX(1); }
   .roster-row:hover { color: #000; }
-  .roster-row:hover .roster-n, .roster-row:hover .roster-credits { color: #000; }
+  .roster-row:hover .roster-n, .roster-row:hover .roster-credits, .roster-row:hover .roster-ig { color: #000; }
+  .roster-row:hover .roster-ig { border-bottom-color: #000; }
   .roster-row:nth-child(even):hover .roster-name { color: #000; -webkit-text-stroke-color: #000; }
   .frame:hover .frame-img img { filter: grayscale(0.2) contrast(1.15); transform: scale(1); }
   .frame:hover .frame-img::before { opacity: 0.25; }
@@ -422,7 +426,9 @@ section { position: relative; }
   .ticker { margin-top: -8px; }
   .tapes-head .rail-btns { display: none; }
   .roster-row { grid-template-columns: 34px 1fr; }
-  .roster-credits { grid-column: 2; text-align: left; margin-top: -4px; font-size: 10px; }
+  .roster-meta { grid-column: 2; align-items: flex-start; gap: 10px; margin-top: -4px; }
+  .roster-credits { text-align: left; font-size: 10px; }
+  .roster-ig { font-size: 12px; padding: 4px 0 2px; }
   .roster-name { font-size: 15vw; }
   .frames { grid-template-columns: 1fr; }
   .show { grid-template-columns: 1fr auto; }

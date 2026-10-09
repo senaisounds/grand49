@@ -76,6 +76,16 @@ export const ytWatch = (id: string) => `https://www.youtube.com/watch?v=${id}`;
 /** Official members only (typographic roster, booking line). Guest features stay credited on their tracks in TRACKS. */
 export const ARTISTS = ["Saint Mosses", "Young CJ", "Lil PPCS"];
 
+/** Personal Instagram per member. Members without a confirmed account are simply left out (no link is shown). */
+export const ARTIST_INSTAGRAM: Partial<Record<string, string>> = {
+  "Saint Mosses": "https://www.instagram.com/saint_mosses/",
+  "Young CJ": "https://www.instagram.com/yfccj_6/",
+  "Lil PPCS": "https://www.instagram.com/lil_ppcs/",
+};
+
+/** "@handle" from an Instagram profile URL. */
+export const igHandle = (url: string) => "@" + url.replace(/\/+$/, "").split("/").pop();
+
 /** Credits per artist, derived from TRACKS (so it stays in sync). */
 export const artistTracks = (name: string) =>
   TRACKS.filter((t) => t.artists.toLowerCase().includes(name.toLowerCase())).map((t) => t.title.replace(/\s*\[.*\]/, ""));

@@ -5,6 +5,8 @@ import { LiteYouTube, useRailParallax } from "./components/Media";
 import { MerchMockup } from "./components/Merch";
 import {
   ARTISTS,
+  ARTIST_INSTAGRAM,
+  igHandle,
   BOOKING_EMAIL,
   BOOKING_READY,
   BRAND,
@@ -314,7 +316,14 @@ function Hood() {
           <li key={a} className="roster-row" data-reveal style={{ ["--d" as string]: `${i * 60}ms` }}>
             <span className="mono roster-n">{String(i + 1).padStart(2, "0")}</span>
             <span className="roster-name glitch-hover" data-text={a.toUpperCase()}>{a.toUpperCase()}</span>
-            <span className="mono roster-credits">{artistTracks(a).join(" · ")}</span>
+            <span className="roster-meta">
+              <span className="mono roster-credits">{artistTracks(a).join(" · ")}</span>
+              {ARTIST_INSTAGRAM[a] && (
+                <a className="mono roster-ig" href={ARTIST_INSTAGRAM[a]} target="_blank" rel="noopener noreferrer" aria-label={`${a} on Instagram (${igHandle(ARTIST_INSTAGRAM[a]!)})`}>
+                  {igHandle(ARTIST_INSTAGRAM[a]!)} ↗
+                </a>
+              )}
+            </span>
           </li>
         ))}
       </ol>
