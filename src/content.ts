@@ -4,7 +4,7 @@
 
 /** Credits shown in the Hood section, booking section and footer. Add `href` to make a name a link. */
 export const CREDITS: { role: string; name: string; href?: string }[] = [
-  { role: "Management", name: "Abel" },
+  { role: "Management", name: "Abel", href: "https://www.instagram.com/_abel._b_/" },
   { role: "DJ", name: "Senai" },
 ];
 

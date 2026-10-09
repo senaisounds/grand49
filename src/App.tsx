@@ -481,7 +481,14 @@ function Booking() {
           <span className="mono booking-kit-meta">PDF · A4 · 2 pages</span>
         </p>
         <div className="booking-row mono">
-          <Credits />
+          <span className="booking-credits">
+            <Credits />
+            {CREDITS.filter((c) => c.href?.includes("instagram.com")).map((c) => (
+              <a key={c.role} className="mono roster-ig booking-ig" href={c.href} target="_blank" rel="noopener noreferrer" aria-label={`${c.name} (${c.role}) on Instagram (${igHandle(c.href!)})`}>
+                {igHandle(c.href!)} ↗
+              </a>
+            ))}
+          </span>
           <a className="link-u" href={LINKS.youtube} target="_blank" rel="noopener noreferrer">YouTube @GRAND49HOOD ↗</a>
         </div>
       </div>

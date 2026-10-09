@@ -348,6 +348,7 @@ section { position: relative; }
 .booking-kit { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin: 0 0 30px; }
 .booking-kit-meta { color: var(--mute); font-size: 11px; }
 .booking-row { display: flex; flex-wrap: wrap; gap: 14px 30px; color: var(--mute); }
+.booking-credits { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
 
 /* footer */
 .footer { padding: 40px var(--pad) 28px; border-top: 1px solid var(--line); overflow: hidden; }
