@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect, useRef, useState } from "react";
-import { canRunWebGLHero, useInView, useIsMobile, usePrefersReducedMotion, useReveal } from "./lib/hooks";
+import { canRunWebGLHero, canRunWebGLOwl, useInView, useIsMobile, usePrefersReducedMotion, useReveal } from "./lib/hooks";
 import { initPlayer, next, play, toggle, toggleMute, usePlayer } from "./lib/player";
 import { LiteYouTube, useRailParallax } from "./components/Media";
 import { MerchMockup } from "./components/Merch";
@@ -22,6 +22,7 @@ import {
 } from "./content";
 
 const HeroScene = lazy(() => import("./components/HeroScene").then((m) => ({ default: m.HeroScene })));
+const OwlScene = lazy(() => import("./components/OwlScene").then((m) => ({ default: m.OwlScene })));
 
 const GATE_KEY = "g49-entered";
 
@@ -38,6 +39,9 @@ export function App() {
     return "open";
   });
   useReveal();
+  useEffect(() => {
+    if (gate === "open" && canRunWebGLOwl()) void import("./components/OwlScene");
+  }, [gate]);
   return (
     <>
       <a className="skip" href="#main">Skip to content</a>
@@ -58,7 +62,7 @@ export function App() {
       )}
       <Nav />
       <main id="main">
-        <Hero reduced={reduced} started={gate !== "open"} />
+        <Hero reduced={reduced} started={gate !== "open"} entered={gate === "gone"} />
         <Ticker />
         <Latest />
         <Tapes />
@@ -142,10 +146,11 @@ function Nav() {
 
 /* ───────────────────────── hero ───────────────────────── */
 
-function Hero({ reduced, started }: { reduced: boolean; started: boolean }) {
+function Hero({ reduced, started, entered }: { reduced: boolean; started: boolean; entered: boolean }) {
   const [ref, inView] = useInView<HTMLElement>("0px");
   const mobile = useIsMobile();
   const [webgl] = useState(() => canRunWebGLHero(reduced));
+  const [owl] = useState(() => canRunWebGLOwl());
   const [glReady, setGlReady] = useState(false);
   const scatter = useRef(0);
   useEffect(() => {
@@ -177,6 +182,13 @@ function Hero({ reduced, started }: { reduced: boolean; started: boolean }) {
               scatter={scatter}
               onReady={() => setGlReady(true)}
             />
+          </Suspense>
+        </div>
+      )}
+      {owl && entered && (
+        <div className="hero-owl" aria-hidden>
+          <Suspense fallback={null}>
+            <OwlScene active={inView} reduced={reduced} mobile={mobile} />
           </Suspense>
         </div>
       )}

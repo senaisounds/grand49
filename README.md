@@ -46,6 +46,9 @@ Everything editable is in one file:
    apart under the cursor, and a "ghost hand" drifts through the lower half when idle. **Phones get a static red duotone
    photo with a CSS glitch instead** (more readable at that size and lighter on data and battery). The same fallback is
    used for reduced motion, Save-Data, low-memory or low-core devices, or no WebGL. `?static` / `?webgl` force either one.
+   After ENTER, a small **3D owl** (procedural three.js, lazy-loaded) swoops in and perches on the GRAND49 wordmark, then
+   idles (head tilt, blink, wing ruffle). `prefers-reduced-motion` skips the flight and shows it already perched. `?noowl`
+   / `?static` hide it; `?owl` forces it on.
 4. Red ticker · **Latest release (BAD)** · **The Tapes**: horizontal scroll-snap rail of click-to-load
    youtube-nocookie embeds with a slight parallax · **The Hood** roster · **Frames** photos · **Shows** · **The Drop**
    (merch) · **Booking** · footer.
@@ -53,7 +56,9 @@ Everything editable is in one file:
 ## Performance
 
 - The three.js / r3f chunk (~230 kB gz) is lazy-loaded **only on desktop** with WebGL, and only after the gate.
-  Phones never download it. The main bundle is ~78 kB gz.
+  Phones never download the particle portrait. The hero owl is a separate lazy chunk (procedural mesh, no GLB) and
+  can run on phones with a simpler, lower-DPR render. The main bundle is ~78 kB gz. The owl chunk is prefetched
+  while the ENTER gate is up so first paint of the gate stays untouched.
 - YouTube embeds are thumbnails until tapped (no iframe cost on load). The background player's API loads while the gate is up.
 - Images are optimized webp files (15–50 kB). Fonts are self-hosted via Fontsource: Anton, JetBrains Mono, and Noto Sans Ethiopic
   (Ethiopic subset only, through `unicode-range`).

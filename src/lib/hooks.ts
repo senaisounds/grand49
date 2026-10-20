@@ -80,4 +80,25 @@ export function canRunWebGLHero(reduced: boolean) {
   }
 }
 
+/**
+ * Cheaper WebGL check for the hero owl: allowed on phones and with reduced motion
+ * (the owl just perches). Still skipped on Save-Data, no WebGL, or `?static` / `?noowl`.
+ */
+export function canRunWebGLOwl() {
+  if (typeof window === "undefined") return false;
+  const q = new URLSearchParams(location.search);
+  if (q.has("static") || q.has("noowl")) return false;
+  if (q.has("owl")) return true;
+  const nav = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
+  if (nav.connection?.saveData) return false;
+  if (nav.deviceMemory !== undefined && nav.deviceMemory < 1) return false;
+  try {
+    const c = document.createElement("canvas");
+    return !!(c.getContext("webgl2") || c.getContext("webgl"));
+  } catch {
+    return false;
+  }
+}
+
 export const DPR: [number, number] = [1, 1.5];
+export const OWL_DPR: [number, number] = [1, 1.25];
