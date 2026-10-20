@@ -19,6 +19,17 @@ const HUNT = 2.72;
 const DOM = 0.42;
 const FOLD = 0.55;
 
+function owlSeek() {
+  try {
+    const q = new URLSearchParams(location.search);
+    const v = Number(q.get("owlt"));
+    const seek = Number.isFinite(v) && v > 0 ? Math.min(v, 30) : 0;
+    return { seek, hold: q.has("owlhold") && seek > 0 };
+  } catch {
+    return { seek: 0, hold: false };
+  }
+}
+
 function clamp01(t: number) {
   return t < 0 ? 0 : t > 1 ? 1 : t;
 }
@@ -300,6 +311,7 @@ function OwlMesh({
   const pointer = useRef({ x: 0, y: 0 });
   const { camera } = useThree();
   const cam0 = useMemo(() => new THREE.Vector3(0.12, 0.04, 4.2), []);
+  const { seek, hold } = useMemo(owlSeek, []);
 
   const perch = useMemo(() => new THREE.Vector3(mobile ? 0.18 : 0.58, mobile ? -0.08 : -0.4, 0), [mobile]);
   const segs = mobile ? 7 : 12;
@@ -314,8 +326,8 @@ function OwlMesh({
   }, [mobile]);
 
   useFrame((state, delta) => {
-    if (t0.current === null) t0.current = state.clock.elapsedTime;
-    const elapsed = state.clock.elapsedTime - t0.current;
+    if (t0.current === null) t0.current = state.clock.elapsedTime - seek;
+    const elapsed = hold ? seek : state.clock.elapsedTime - t0.current;
     const flyT = reduced ? 1 : clamp01((elapsed - delay) / HUNT);
     const flying = flyT < 1;
     const idleT = Math.max(0, elapsed - delay - HUNT);
@@ -397,10 +409,13 @@ function OwlMesh({
 
     const sp = h.spread;
     const bt = h.beat;
-    left.current.rotation.set(-0.12 + (1 - sp) * 0.72, 0.08 + (1 - sp) * 1.22, -0.06 - bt - flex);
-    right.current.rotation.set(-0.12 + (1 - sp) * 0.72, -(0.08 + (1 - sp) * 1.22), 0.06 + bt + flex);
-    left.current.scale.set(0.14 + sp * 0.96, 1, 1);
-    right.current.scale.set(0.14 + sp * 0.96, 1, 1);
+    const folded = 1 - sp;
+    left.current.rotation.set(-0.14 + folded * 1.02, 0.06 + folded * 1.52, -0.08 - bt - flex - folded * 0.4);
+    right.current.rotation.set(-0.14 + folded * 1.02, -(0.06 + folded * 1.52), 0.08 + bt + flex + folded * 0.4);
+    left.current.scale.set(0.05 + sp * 1.05, 1, 0.55 + sp * 0.45);
+    right.current.scale.set(0.05 + sp * 1.05, 1, 0.55 + sp * 0.45);
+    left.current.position.set(-0.1 + folded * 0.03, 0.05 - folded * 0.1, folded * -0.1);
+    right.current.position.set(0.1 - folded * 0.03, 0.05 - folded * 0.1, folded * -0.1);
 
     const kick = h.talon;
     talL.current.rotation.set(-0.15 - kick * 1.15, 0, 0.08);
@@ -408,7 +423,10 @@ function OwlMesh({
     talL.current.position.z = 0.04 + kick * 0.16;
     talR.current.position.z = 0.04 + kick * 0.16;
 
-    if (!reduced && !flying) {
+    if (hold && !flying) {
+      look.current.x = 0.1;
+      look.current.y = 0.16;
+    } else if (!reduced && !flying) {
       if (mobile) {
         if (idleT > snapT.current) {
           snap.current.y = (Math.random() > 0.45 ? 1 : -1) * (0.34 + Math.random() * 0.4);

@@ -49,6 +49,7 @@ Everything editable is in one file:
    After ENTER, a **3D predator owl** (procedural three.js, lazy-loaded) cuts a tight hawk circle, stoops, and slams onto
    the GRAND49 wordmark — owl silhouette, raptor motion. Idle is a fierce stare, alert head snaps, and snappy wing flicks.
    `prefers-reduced-motion` skips the hunt and shows it already perched. `?noowl` / `?static` hide it; `?owl` forces it on.
+   `?owlt=` seeks the hunt (seconds) for QA; add `&owlhold` to freeze that pose.
 4. Red ticker · **Latest release (BAD)** · **The Tapes**: horizontal scroll-snap rail of click-to-load
    youtube-nocookie embeds with a slight parallax · **The Hood** roster · **Frames** photos · **Shows** · **The Drop**
    (merch) · **Booking** · footer.
