@@ -157,8 +157,10 @@ button { font: inherit; color: inherit; }
 .hero-photo::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.35) 0 1px, transparent 1px 3px); }
 .hero-canvas { position: absolute; inset: 0; z-index: 1; animation: fade-in 1.4s ease both; }
 .hero-owl {
-  position: absolute; z-index: 4; pointer-events: none; left: 0; top: 6%;
-  width: min(58vw, 780px); height: 78%; animation: fade-in 0.7s ease both;
+  position: absolute; z-index: 4; pointer-events: none;
+  left: clamp(240px, 30vw, 520px); bottom: clamp(210px, 36vh, 400px);
+  width: min(300px, 28vw); height: min(260px, 34vh);
+  animation: fade-in 0.55s ease both;
 }
 .hero-owl canvas { display: block; width: 100% !important; height: 100% !important; }
 @keyframes fade-in { from { opacity: 0; } }
@@ -423,7 +425,7 @@ section { position: relative; }
   .hero-photo img { object-position: 50% 0%; }
   .hero-shade { background: linear-gradient(0deg, #070707 18%, rgba(7, 7, 7, 0.75) 42%, transparent 70%), radial-gradient(120% 80% at 50% 30%, transparent 50%, rgba(0, 0, 0, 0.6)); }
   .hero-copy { bottom: 48px; right: var(--pad); }
-  .hero-owl { left: auto; right: 0; top: auto; bottom: 22%; width: min(78vw, 360px); height: min(38vh, 260px); }
+  .hero-owl { left: auto; right: 2%; top: auto; bottom: 20%; width: min(48vw, 200px); height: min(22vh, 170px); }
   .hero-title .glitch { font-size: 25.5vw; }
   .hero-hood { font-size: 17vw; -webkit-text-stroke-width: 1.5px; }
   .hero-tag { margin: 16px 0 20px; }
