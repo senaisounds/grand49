@@ -188,7 +188,18 @@ function Hero({ reduced, started, entered }: { reduced: boolean; started: boolea
       {owl && entered && (
         <div className="hero-owl" aria-hidden>
           <Suspense fallback={null}>
-            <OwlScene active={inView} reduced={reduced} mobile={mobile} />
+            <OwlScene
+              active={inView}
+              reduced={reduced}
+              mobile={mobile}
+              onImpact={() => {
+                if (reduced) return;
+                const el = ref.current;
+                if (!el) return;
+                el.classList.add("is-owl-hit");
+                window.setTimeout(() => el.classList.remove("is-owl-hit"), 420);
+              }}
+            />
           </Suspense>
         </div>
       )}
