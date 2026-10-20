@@ -103,15 +103,15 @@ function OwlMesh({ mobile, reduced, delay }: { mobile: boolean; reduced: boolean
   const nextLook = useRef(1.6);
 
   const path = useMemo(() => {
-    const perch = new THREE.Vector3(0.02, -0.08, 0);
+    const perch = new THREE.Vector3(mobile ? 0.2 : 0.72, mobile ? -0.12 : -0.42, 0);
     return {
-      a: new THREE.Vector3(1.55, 1.15, -0.15),
-      b: new THREE.Vector3(0.85, 0.85, 0.85),
-      c: new THREE.Vector3(0.28, 0.22, 0.28),
+      a: perch.clone().add(new THREE.Vector3(1.85, 1.55, -0.4)),
+      b: perch.clone().add(new THREE.Vector3(0.85, 1.15, 1.05)),
+      c: perch.clone().add(new THREE.Vector3(0.28, 0.42, 0.35)),
       d: perch,
       tmp: new THREE.Vector3(),
     };
-  }, []);
+  }, [mobile]);
 
   const segs = mobile ? 8 : 16;
 
@@ -180,7 +180,7 @@ function OwlMesh({ mobile, reduced, delay }: { mobile: boolean; reduced: boolean
   });
 
   return (
-    <group ref={root} scale={mobile ? 1.05 : 1.12}>
+    <group ref={root} scale={mobile ? 0.7 : 0.78}>
       <group ref={body}>
         <mesh scale={[0.88, 1.02, 0.8]} position={[0, -0.04, 0]}>
           <sphereGeometry args={[0.24, segs, segs]} />
@@ -273,7 +273,7 @@ export function OwlScene({
       dpr={mobile ? ([1, 1] as [number, number]) : OWL_DPR}
       gl={{ antialias: !mobile, powerPreference: "high-performance", alpha: true }}
       style={{ pointerEvents: "none" }}
-      camera={{ position: [0, 0.08, 3.15], fov: 32 }}
+      camera={{ position: [0.2, 0.02, 4.55], fov: 30 }}
       onCreated={({ gl }) => {
         gl.setClearColor(0x000000, 0);
         gl.toneMappingExposure = 1.12;
