@@ -1,5 +1,5 @@
 // Predator horned owl — owl silhouette, hawk hunt, eagle stoop.
-// Procedural three.js so we own the scowl, the talons, and the strike.
+// Tight circling glide, snap-tuck, decisive dive. Procedural three.js.
 import * as THREE from "three";
 import { useEffect, useMemo, useRef, type RefObject } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
@@ -15,9 +15,9 @@ const CLAW = "#6e5434";
 const RED = "#d4141c";
 const RED_HOT = "#ff2a28";
 
-const HUNT = 3.15;
-const DOM = 0.55;
-const FOLD = 0.7;
+const HUNT = 2.72;
+const DOM = 0.42;
+const FOLD = 0.55;
 
 function clamp01(t: number) {
   return t < 0 ? 0 : t > 1 ? 1 : t;
@@ -41,16 +41,16 @@ function Feather({ color = PLUME }: { color?: string }) {
 
 function Eye({ x }: { x: number }) {
   return (
-    <group position={[x, 0.008, 0.205]} rotation={[0, 0, x > 0 ? -0.12 : 0.12]} scale={[0.38, 1.05, 1]}>
-      <mesh position={[0, 0, 0.012]} scale={[2.4, 1.6, 1]}>
+    <group position={[x, 0.008, 0.205]} rotation={[0, 0, x > 0 ? -0.14 : 0.14]} scale={[0.32, 1.12, 1]}>
+      <mesh position={[0, 0, 0.012]} scale={[2.6, 1.45, 1]}>
         <circleGeometry args={[0.05, 12]} />
-        <meshBasicMaterial color={RED_HOT} transparent opacity={0.2} blending={THREE.AdditiveBlending} depthWrite={false} />
+        <meshBasicMaterial color={RED_HOT} transparent opacity={0.26} blending={THREE.AdditiveBlending} depthWrite={false} />
       </mesh>
       <mesh>
         <sphereGeometry args={[0.048, 10, 8]} />
-        <meshStandardMaterial color="#2a0305" emissive={RED} emissiveIntensity={1.35} roughness={0.16} metalness={0.28} />
+        <meshStandardMaterial color="#2a0305" emissive={RED} emissiveIntensity={1.7} roughness={0.14} metalness={0.3} />
       </mesh>
-      <mesh position={[0, 0, 0.03]} scale={[0.32, 0.7, 0.22]}>
+      <mesh position={[0, 0, 0.03]} scale={[0.28, 0.78, 0.2]}>
         <sphereGeometry args={[0.048, 8, 8]} />
         <meshStandardMaterial color="#050201" roughness={0.22} />
       </mesh>
@@ -170,84 +170,90 @@ type Hunt = {
   scale: number;
 };
 
+function hawkBeat(t: number) {
+  // Snappy bursts, then a locked glide, then two correction beats before the tuck.
+  const env = t < 0.16 ? 1 : t < 0.24 ? 0.12 : t < 0.62 ? 0.06 : t < 0.82 ? 0.95 : 0.18;
+  return Math.sin(t * Math.PI * 11.5) * env * 0.92;
+}
+
 function huntAt(u: number, perch: THREE.Vector3, out: Hunt) {
   const px = perch.x;
   const py = perch.y;
   const pz = perch.z;
-  // 0-0.40 circle/glide · 0.40-0.58 tuck · 0.58-0.78 stoop · 0.78-0.90 flare · 0.90-1 land
-  if (u < 0.4) {
-    const t = u / 0.4;
-    const ang = lerp(0.2, 2.55, easeInOut(t));
-    const rad = lerp(2.15, 1.05, t);
-    out.pos.set(px + Math.cos(ang) * rad, py + 1.85 - t * 0.45, pz + Math.sin(ang) * rad * 0.75 - 0.15);
+  // 0-0.30 tight circle · 0.30-0.44 tuck · 0.44-0.74 stoop · 0.74-0.88 flare · 0.88-1 land
+  if (u < 0.3) {
+    const t = u / 0.3;
+    const ang = lerp(0.1, 0.1 + Math.PI * 2.2, t);
+    const rad = lerp(1.42, 0.68, easeInOut(t));
+    out.pos.set(px + Math.cos(ang) * rad, py + 1.58 - t * 0.28, pz + Math.sin(ang) * rad * 0.58 - 0.08);
     out.yaw = ang + Math.PI * 0.5;
-    out.pitch = -0.18;
-    out.roll = Math.sin(t * Math.PI) * 0.55;
-    out.spread = 1;
-    out.beat = Math.sin(t * Math.PI * 3.2) * (t < 0.22 || t > 0.7 ? 0.7 : 0.18);
-    out.talon = 0.15;
-    out.chest = 0;
+    out.pitch = -0.1 + Math.sin(t * Math.PI * 2.2) * 0.1;
+    out.roll = Math.sin(t * Math.PI * 2.2) * 0.78;
+    out.spread = 0.92 + Math.abs(Math.sin(t * Math.PI * 2.2)) * 0.08;
+    out.beat = hawkBeat(t);
+    out.talon = 0.12;
+    out.chest = 0.04;
     out.scale = 1;
     return;
   }
-  if (u < 0.58) {
-    const t = (u - 0.4) / 0.18;
+  if (u < 0.44) {
+    const t = (u - 0.3) / 0.14;
     const e = easeIn(t);
-    const ang = 2.55;
+    const ang = 0.1 + Math.PI * 2.2;
     out.pos.set(
-      lerp(px + Math.cos(ang) * 1.05, px + 0.25, e),
-      lerp(py + 1.4, py + 1.05, e),
-      lerp(pz + Math.sin(ang) * 0.79 - 0.15, pz + 1.15, e),
+      lerp(px + Math.cos(ang) * 0.68, px + 0.18, e),
+      lerp(py + 1.3, py + 1.08, e),
+      lerp(pz + Math.sin(ang) * 0.39 - 0.08, pz + 1.05, e),
     );
-    out.yaw = lerp(ang + Math.PI * 0.5, 0.55, t);
-    out.pitch = lerp(-0.18, 0.85, e);
-    out.roll = lerp(0.15, 0.05, t);
-    out.spread = lerp(1, 0.08, easeInOut(t));
+    out.yaw = lerp(ang + Math.PI * 0.5, 0.48, easeInOut(t));
+    out.pitch = lerp(-0.1, 0.95, e);
+    out.roll = lerp(Math.sin(Math.PI * 2.2) * 0.78, 0.04, t);
+    out.spread = lerp(1, 0.05, easeInOut(t));
     out.beat = 0;
-    out.talon = lerp(0.15, 0.45, t);
-    out.chest = 0;
-    out.scale = lerp(1, 1.08, t);
+    out.talon = lerp(0.12, 0.55, t);
+    out.chest = lerp(0.04, 0.02, t);
+    out.scale = lerp(1, 1.1, t);
     return;
   }
-  if (u < 0.78) {
-    const t = (u - 0.58) / 0.2;
-    const e = easeIn(t);
-    out.pos.set(lerp(px + 0.25, px + 0.08, e), lerp(py + 1.05, py + 0.22, e), lerp(pz + 1.15, pz + 1.85, e));
-    out.yaw = 0.42;
-    out.pitch = lerp(0.85, 1.05, t);
-    out.roll = Math.sin(t * 6) * 0.04;
-    out.spread = 0.06;
+  if (u < 0.74) {
+    const t = (u - 0.44) / 0.3;
+    const e = t * t * t;
+    out.pos.set(lerp(px + 0.18, px + 0.06, e), lerp(py + 1.08, py + 0.16, e), lerp(pz + 1.05, pz + 1.95, e));
+    out.yaw = 0.36;
+    out.pitch = lerp(0.95, 1.12, t);
+    out.roll = Math.sin(t * 9) * 0.03;
+    out.spread = 0.04;
     out.beat = 0;
-    out.talon = lerp(0.45, 1, e);
-    out.chest = 0.1;
-    out.scale = lerp(1.08, 1.55, e);
+    out.talon = lerp(0.55, 1, e);
+    out.chest = 0.08;
+    out.scale = lerp(1.1, 1.68, e);
     return;
   }
-  if (u < 0.9) {
-    const t = (u - 0.78) / 0.12;
+  if (u < 0.88) {
+    const t = (u - 0.74) / 0.14;
     const e = easeOut(t);
-    out.pos.set(lerp(px + 0.08, px + 0.04, e), lerp(py + 0.22, py + 0.02, e), lerp(pz + 1.85, pz + 0.35, e));
-    out.yaw = lerp(0.42, 0.38, t);
-    out.pitch = lerp(1.05, -0.15, e);
+    out.pos.set(lerp(px + 0.06, px + 0.03, e), lerp(py + 0.16, py + 0.01, e), lerp(pz + 1.95, pz + 0.32, e));
+    out.yaw = lerp(0.36, 0.38, t);
+    out.pitch = lerp(1.12, -0.18, e);
     out.roll = 0;
-    out.spread = lerp(0.06, 1.15, e);
+    out.spread = lerp(0.04, 1.18, e);
     out.beat = 0;
     out.talon = 1;
-    out.chest = lerp(0.1, 0.35, t);
-    out.scale = lerp(1.55, 1.12, e);
+    out.chest = lerp(0.08, 0.38, t);
+    out.scale = lerp(1.68, 1.1, e);
     return;
   }
-  const t = (u - 0.9) / 0.1;
+  const t = (u - 0.88) / 0.12;
   const e = easeOut(t);
-  out.pos.set(lerp(px + 0.04, px, e), lerp(py + 0.02, py, e), lerp(pz + 0.35, pz, e));
+  out.pos.set(lerp(px + 0.03, px, e), lerp(py + 0.01, py, e), lerp(pz + 0.32, pz, e));
   out.yaw = 0.38;
-  out.pitch = lerp(-0.15, 0.08, t);
+  out.pitch = lerp(-0.18, 0.06, t);
   out.roll = 0;
-  out.spread = lerp(1.15, 0.85, t);
+  out.spread = lerp(1.18, 0.78, t);
   out.beat = 0;
-  out.talon = lerp(1, 0.35, t);
-  out.chest = lerp(0.35, 0.55, t);
-  out.scale = lerp(1.12, 1, t);
+  out.talon = lerp(1, 0.32, t);
+  out.chest = lerp(0.38, 0.52, t);
+  out.scale = lerp(1.1, 1, t);
 }
 
 function OwlMesh({
@@ -274,11 +280,12 @@ function OwlMesh({
   const hit = useRef(false);
   const burst = useRef(0);
   const shake = useRef(0);
-  const snapT = useRef(1.4);
-  const snap = useRef({ x: 0.04, y: 0.12 });
-  const narrowAt = useRef(2.2);
-  const flexAt = useRef(3.6);
-  const look = useRef({ x: 0.04, y: 0.1 });
+  const snapT = useRef(0.55);
+  const snapHold = useRef(0);
+  const snap = useRef({ x: 0.05, y: 0.08 });
+  const narrowAt = useRef(1.35);
+  const flexAt = useRef(2.1);
+  const look = useRef({ x: 0.06, y: 0.06 });
   const hunt = useRef<Hunt>({
     pos: new THREE.Vector3(),
     pitch: 0,
@@ -382,10 +389,10 @@ function OwlMesh({
     body.current.rotation.x = -h.chest * 0.18;
 
     let flex = 0;
-    if (!reduced && !flying && idleT > flexAt.current && idleT < flexAt.current + 0.35) {
-      flex = Math.sin(((idleT - flexAt.current) / 0.35) * Math.PI) * 0.55;
-    } else if (!reduced && !flying && idleT > flexAt.current + 0.35) {
-      flexAt.current = idleT + 3.2 + Math.random() * 3.5;
+    if (!reduced && !flying && idleT > flexAt.current && idleT < flexAt.current + 0.18) {
+      flex = Math.sin(((idleT - flexAt.current) / 0.18) * Math.PI) * 0.72;
+    } else if (!reduced && !flying && idleT > flexAt.current + 0.18) {
+      flexAt.current = idleT + 1.6 + Math.random() * 2.4;
     }
 
     const sp = h.spread;
@@ -404,39 +411,41 @@ function OwlMesh({
     if (!reduced && !flying) {
       if (mobile) {
         if (idleT > snapT.current) {
-          snap.current.y = (Math.random() > 0.5 ? 1 : -1) * (0.25 + Math.random() * 0.35);
-          snap.current.x = (Math.random() - 0.5) * 0.18;
-          snapT.current = idleT + 1.1 + Math.random() * 1.8;
+          snap.current.y = (Math.random() > 0.45 ? 1 : -1) * (0.34 + Math.random() * 0.4);
+          snap.current.x = (Math.random() - 0.5) * 0.2;
+          snapHold.current = idleT + 0.16;
+          snapT.current = idleT + 0.48 + Math.random() * 0.85;
         }
-        look.current.y = THREE.MathUtils.damp(look.current.y, snap.current.y, 8, delta);
-        look.current.x = THREE.MathUtils.damp(look.current.x, snap.current.x, 8, delta);
+        look.current.y = THREE.MathUtils.damp(look.current.y, snap.current.y, 18, delta);
+        look.current.x = THREE.MathUtils.damp(look.current.x, snap.current.x, 18, delta);
       } else {
-        const tx = -pointer.current.y * 0.22;
-        const ty = pointer.current.x * 0.62;
+        const tx = -pointer.current.y * 0.28;
+        const ty = pointer.current.x * 0.78;
         if (idleT > snapT.current) {
-          snap.current.y = ty + (Math.random() - 0.5) * 0.55;
-          snap.current.x = tx + (Math.random() - 0.5) * 0.16;
-          snapT.current = idleT + 1.4 + Math.random() * 2.2;
+          snap.current.y = ty + (Math.random() - 0.5) * 0.72;
+          snap.current.x = tx + (Math.random() - 0.5) * 0.18;
+          snapHold.current = idleT + 0.16;
+          snapT.current = idleT + 0.55 + Math.random() * 0.95;
         }
-        const snapping = idleT < snapT.current - 1.15;
-        look.current.y = THREE.MathUtils.damp(look.current.y, snapping ? snap.current.y : ty, snapping ? 10 : 3.2, delta);
-        look.current.x = THREE.MathUtils.damp(look.current.x, snapping ? snap.current.x : tx, snapping ? 10 : 3.2, delta);
+        const snapping = idleT < snapHold.current;
+        look.current.y = THREE.MathUtils.damp(look.current.y, snapping ? snap.current.y : ty, snapping ? 20 : 6.5, delta);
+        look.current.x = THREE.MathUtils.damp(look.current.x, snapping ? snap.current.x : tx, snapping ? 20 : 6.5, delta);
       }
     } else if (flying) {
-      look.current.x = THREE.MathUtils.damp(look.current.x, 0.18, 4, delta);
-      look.current.y = THREE.MathUtils.damp(look.current.y, 0.0, 4, delta);
+      look.current.x = THREE.MathUtils.damp(look.current.x, 0.22, 8, delta);
+      look.current.y = THREE.MathUtils.damp(look.current.y, 0.0, 8, delta);
     }
     head.current.rotation.y = reduced ? 0.08 : look.current.y;
     head.current.rotation.x = reduced ? 0.05 : look.current.x;
 
-    let lid = 0.02;
+    let lid = 0.038;
     if (!reduced) {
       const clock = flying ? elapsed : idleT;
-      if (clock > narrowAt.current && clock < narrowAt.current + 0.7) {
-        const n = (clock - narrowAt.current) / 0.7;
-        lid = Math.sin(n * Math.PI) * 0.085;
-      } else if (clock > narrowAt.current + 0.7) {
-        narrowAt.current = clock + 2.8 + Math.random() * 3.4;
+      if (clock > narrowAt.current && clock < narrowAt.current + 0.42) {
+        const n = (clock - narrowAt.current) / 0.42;
+        lid = 0.038 + Math.sin(n * Math.PI) * 0.1;
+      } else if (clock > narrowAt.current + 0.42) {
+        narrowAt.current = clock + 1.5 + Math.random() * 2.2;
       }
     }
     for (const el of [lidL.current, lidR.current]) {

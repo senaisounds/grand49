@@ -46,8 +46,8 @@ Everything editable is in one file:
    apart under the cursor, and a "ghost hand" drifts through the lower half when idle. **Phones get a static red duotone
    photo with a CSS glitch instead** (more readable at that size and lighter on data and battery). The same fallback is
    used for reduced motion, Save-Data, low-memory or low-core devices, or no WebGL. `?static` / `?webgl` force either one.
-   After ENTER, a **3D predator owl** (procedural three.js, lazy-loaded) circles, stoops, and slams onto the GRAND49
-   wordmark — hawk hunt, eagle flare, owl silhouette. Idle is a cursor-tracking stare and wing flex, not a cute blink.
+   After ENTER, a **3D predator owl** (procedural three.js, lazy-loaded) cuts a tight hawk circle, stoops, and slams onto
+   the GRAND49 wordmark — owl silhouette, raptor motion. Idle is a fierce stare, alert head snaps, and snappy wing flicks.
    `prefers-reduced-motion` skips the hunt and shows it already perched. `?noowl` / `?static` hide it; `?owl` forces it on.
 4. Red ticker · **Latest release (BAD)** · **The Tapes**: horizontal scroll-snap rail of click-to-load
    youtube-nocookie embeds with a slight parallax · **The Hood** roster · **Frames** photos · **Shows** · **The Drop**
