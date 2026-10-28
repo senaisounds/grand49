@@ -34,6 +34,26 @@
           "value": "public, max-age=0, must-revalidate"
         }
       ]
+    },
+    {
+      "source": "/GRAND49-Press-Kit.pdf",
+      "headers": [
+        {
+          "key": "Content-Disposition",
+          "value": "inline; filename=\"GRAND49-Press-Kit.pdf\""
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/presave",
+      "destination": "https://distrokid.com/hyperfollow/grand49/helm-ayche-mata-feat-saint-mosses--young-cj",
+      "permanent": false
     }
   ]
 }

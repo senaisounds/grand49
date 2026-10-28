@@ -60,6 +60,7 @@ export function App() {
       <main id="main">
         <Hero reduced={reduced} started={gate !== "open"} />
         <Ticker />
+        <PreSaveBanner />
         <Latest />
         <Tapes />
         <Hood />
@@ -198,6 +199,9 @@ function Hero({ reduced, started }: { reduced: boolean; started: boolean }) {
           <button type="button" className="btn btn-red" onClick={() => play()}>
             <span aria-hidden>▶</span> Play {latest.title}
           </button>
+          <a href={LINKS.helmPresave} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+            <span className="rec" aria-hidden /> Pre-save HELM AYCHE MATA · Nov 10 ↗
+          </a>
           <a href="#booking" className="btn btn-ghost">Book GRAND49</a>
         </div>
       </div>
@@ -227,6 +231,42 @@ function Ticker() {
         {row}
       </div>
     </div>
+  );
+}
+
+
+function PreSaveBanner() {
+  return (
+    <section className="presave" aria-label="Pre-save HELM AYCHE MATA on Spotify">
+      <div className="presave-inner" data-reveal>
+        <img
+          src="/img/helm-ayche-mata-cover.webp"
+          alt="HELM AYCHE MATA cover art"
+          className="presave-cover"
+          loading="eager"
+          decoding="async"
+        />
+        <div className="presave-copy">
+          <p className="mono presave-k">
+            <span className="rec" aria-hidden /> Dropping November 10, 2026 on Spotify &amp; all platforms
+          </p>
+          <h2 className="presave-title">
+            HELM AYCHE MATA <span className="eth" lang="am">4 እና 9</span>
+          </h2>
+          <p className="mono presave-sub">GRAND 49 · Saint Mosses · Young CJ · 3.5M+ views on YouTube</p>
+        </div>
+        <div className="presave-cta">
+          <a
+            href={LINKS.helmPresave}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-red"
+          >
+            Pre-Save on Spotify ↗
+          </a>
+        </div>
+      </div>
+    </section>
   );
 }
 

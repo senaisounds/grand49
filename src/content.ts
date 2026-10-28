@@ -15,7 +15,7 @@ export const CREDITS: { role: string; name: string; href?: string }[] = [
  *   - the booking CTA becomes a mailto: button
  *   - the merch "Notify me" buttons become mailto: links (until then they point at the YouTube subscribe link)
  */
-export const EMAIL_DOMAIN = "";
+export const EMAIL_DOMAIN = "grand49.com";
 export const BOOKING_READY = EMAIL_DOMAIN.length > 0;
 export const BOOKING_EMAIL = BOOKING_READY ? `booking@${EMAIL_DOMAIN}` : "booking@ — TBD";
 
@@ -40,6 +40,7 @@ export const LINKS = {
   youtubeSubs: "100K",
   /** Spotify artist "GRAND 49". */
   spotify: "https://open.spotify.com/artist/3j0PUJY6CK9db5HLNozFwa",
+  helmPresave: "https://distrokid.com/hyperfollow/grand49/helm-ayche-mata-feat-saint-mosses--young-cj",
   /** One-page-ish EPK (A4, 2 pages). Source + builder: /workspace/grand49/press-kit (node build.mjs), then copy to public/press-kit.pdf. */
   pressKit: "/press-kit.pdf",
   /** No confirmed crew Instagram yet. Add the URL here and it appears in the footer. */
@@ -137,7 +138,7 @@ export type Photo = { src: string; alt: string; caption: string; position?: stri
 
 /** Photo slots for the "Frames" gallery. Swap files in /public/img and edit here. */
 export const PHOTOS: Photo[] = [
-  { src: "/img/crew-suits.webp", alt: "Four GRAND49 members in dark suits, gloves and a trench coat on a dim set", caption: "GRAND49 HOOD", position: "50% 30%" },
+  { src: "/img/crew-suits.webp", alt: "Three GRAND49 members in dark suits and gloves on a dim set", caption: "GRAND49 HOOD", position: "50% 28%" },
   { src: "/img/helm-ayche-mata-cover.webp", alt: "Young CJ and Saint Mosses against a sunset city skyline, HELM AYCHE MATA cover art", caption: "Young CJ x Saint Mosses — HELM AYCHE MATA", position: "50% 40%" },
 ];
 
