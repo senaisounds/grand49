@@ -2,7 +2,7 @@ import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { canRunWebGLHero, useInView, useIsMobile, usePrefersReducedMotion, useReveal } from "./lib/hooks";
 import { initPlayer, next, play, toggle, toggleMute, usePlayer } from "./lib/player";
 import { LiteYouTube, useRailParallax } from "./components/Media";
-import { MerchMockup } from "./components/Merch";
+import { MerchDrop } from "./components/Merch";
 import {
   ARTISTS,
   ARTIST_INSTAGRAM,
@@ -13,7 +13,6 @@ import {
   CREDITS,
   HERO_IMAGE,
   LINKS,
-  MERCH,
   PHOTOS,
   SHOWS,
   TRACKS,
@@ -66,7 +65,7 @@ export function App() {
         <Hood />
         <Frames />
         <Shows />
-        <Drop />
+        <MerchDrop />
         <Booking />
       </main>
       <Footer />
@@ -134,7 +133,7 @@ function Nav() {
         <a href="#music">Music</a>
         <a href="#hood">Hood</a>
         <a href="#shows">Shows</a>
-        <a href="#drop">Merch</a>
+        <a href="#merch">Merch</a>
         <a href="#booking" className="nav-cta">Book</a>
       </nav>
     </header>
@@ -438,42 +437,6 @@ function Shows() {
   );
 }
 
-/* ───────────────────────── merch ───────────────────────── */
-
-function Drop() {
-  return (
-    <section id="drop" className="drop">
-      <SectionHead k="Drop 001 · merch" title="The Drop">
-        <p className="shead-p" data-reveal>Nothing's for sale yet. Get notified when it lands.</p>
-      </SectionHead>
-      <div className="drop-grid">
-        {MERCH.map((m, i) => {
-          const notify = BOOKING_READY
-            ? `mailto:${BOOKING_EMAIL}?subject=${encodeURIComponent(`Notify me: ${m.name}`)}`
-            : LINKS.youtubeSubscribe;
-          return (
-            <article key={m.name} className="merch" data-reveal style={{ ["--d" as string]: `${i * 80}ms` }}>
-              <div className="merch-art">
-                {m.image ? <img src={m.image} alt={m.name} loading="lazy" /> : <MerchMockup item={m} />}
-                <span className="merch-stamp mono" aria-hidden>Coming soon</span>
-              </div>
-              <div className="merch-meta">
-                <span className="mono merch-n">{String(i + 1).padStart(3, "0")}</span>
-                <h3 className="merch-name">{m.name}</h3>
-                <p className="mono merch-status">Coming soon</p>
-                <a className="btn btn-line" href={notify} target={BOOKING_READY ? undefined : "_blank"} rel="noopener noreferrer">
-                  Notify me
-                </a>
-                {!BOOKING_READY && <p className="mono merch-via">Subscribe on YouTube for the drop</p>}
-              </div>
-            </article>
-          );
-        })}
-      </div>
-    </section>
-  );
-}
-
 function Credits({ className = "" }: { className?: string }) {
   return (
     <span className={`credits ${className}`}>
@@ -544,6 +507,7 @@ function Footer() {
         <a href={LINKS.youtube} target="_blank" rel="noopener noreferrer">YouTube · {LINKS.youtubeSubs} subscribers</a>
         {LINKS.spotify && <a href={LINKS.spotify} target="_blank" rel="noopener noreferrer">Spotify</a>}
         {LINKS.instagram && <a href={LINKS.instagram} target="_blank" rel="noopener noreferrer">Instagram</a>}
+        <a href="#merch">Merch</a>
         <a href="#booking">Booking</a>
       </div>
       <div className="footer-row mono">

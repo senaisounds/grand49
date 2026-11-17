@@ -117,21 +117,34 @@ export const SHOWS: Show[] = [
   },
 ];
 
+export type MerchKind = "cap" | "beanie" | "tee" | "longsleeve" | "hoodie";
+
 export type MerchItem = {
+  id: string;
   name: string;
-  kind: "tee" | "hoodie" | "cap";
-  print: string; // text printed on the CSS mockup
-  printSub?: string;
-  colorway: "black" | "bone" | "red";
-  /** Optional product photo. When set it replaces the CSS mockup. */
-  image?: string;
+  kind: MerchKind;
+  colorway: "black" | "white";
+  front: string;
+  back?: string;
+  /** White studio plate (do not treat the photo as a cutout). */
+  studio?: boolean;
 };
 
-/** Merch drop. No products or prices exist yet: every item shows "Coming soon / Notify me". */
+export const MERCH_COLLECTION = "ARAT ENA ZETENG";
+export const MERCH_COLLECTION_AM = "አራት እና ዘጠኝ";
+export const MERCH_TAGLINE = "We ask for forgiveness, not permission · Addis Ababa, 49";
+export const MERCH_EMAIL = "info@grand49.com";
+export const MERCH_ORDER_HREF =
+  `mailto:${MERCH_EMAIL}?subject=${encodeURIComponent("GRAND 49 Merch Order")}`;
+
+/** ARAT ENA ZETENG collection. No prices — order / inquire by email. */
 export const MERCH: MerchItem[] = [
-  { name: "GRAND49 Tee", kind: "tee", print: "GRAND49", printSub: "FROM THE STREETS TO THE STREETS", colorway: "black" },
-  { name: "4 ena 9 Hoodie", kind: "hoodie", print: "4 እና 9", printSub: "GRAND49 HOOD", colorway: "bone" },
-  { name: "GRAND49 Cap", kind: "cap", print: "G49", colorway: "red" },
+  { id: "cap", name: "Black Snapback", kind: "cap", colorway: "black", front: "/img/merch/cap-front.webp", back: "/img/merch/cap-back.webp" },
+  { id: "beanie", name: "Black Beanie", kind: "beanie", colorway: "black", front: "/img/merch/beanie.webp" },
+  { id: "tee-white", name: "White Tee", kind: "tee", colorway: "white", front: "/img/merch/tee-white-front.webp", back: "/img/merch/tee-white-back.webp", studio: true },
+  { id: "tee-black", name: "Black Tee", kind: "tee", colorway: "black", front: "/img/merch/tee-black-front.webp", back: "/img/merch/tee-black-back.webp" },
+  { id: "ls-white", name: "White Long Sleeve", kind: "longsleeve", colorway: "white", front: "/img/merch/ls-white-front.webp", back: "/img/merch/ls-white-back.webp", studio: true },
+  { id: "hoodie-black", name: "Black Hoodie", kind: "hoodie", colorway: "black", front: "/img/merch/hoodie-black-front.webp", back: "/img/merch/hoodie-black-back.webp" },
 ];
 
 export type Photo = { src: string; alt: string; caption: string; position?: string };
