@@ -224,10 +224,12 @@ function Ticker() {
     </span>
   ));
   return (
-    <div className="ticker" aria-hidden>
-      <div className="ticker-track">
-        {row}
-        {row}
+    <div className="ticker-clip">
+      <div className="ticker" aria-hidden>
+        <div className="ticker-track">
+          {row}
+          {row}
+        </div>
       </div>
     </div>
   );

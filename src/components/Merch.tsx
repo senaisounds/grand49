@@ -65,7 +65,7 @@ export function MerchDrop() {
   return (
     <section ref={sectionRef} id="merch" className="drop" aria-labelledby="merch-title">
       <span id="drop" className="drop-anchor" aria-hidden />
-      <MerchMarquee className="merch-marquee-top" />
+      <div className="merch-marquee-clip"><MerchMarquee className="merch-marquee-top" /></div>
 
       <div className="merch-hero" data-reveal>
         <img
@@ -112,7 +112,7 @@ export function MerchDrop() {
         <TicketCta reduced={reduced} />
       </div>
 
-      <MerchMarquee className="merch-marquee-bottom" />
+      <div className="merch-marquee-clip"><MerchMarquee className="merch-marquee-bottom" /></div>
     </section>
   );
 }
@@ -139,7 +139,12 @@ function MerchViewer({
     el.setAttribute("poster", poster);
     el.setAttribute("alt", alt);
     el.setAttribute("camera-controls", "");
-    el.setAttribute("camera-orbit", "20deg 80deg 105%");
+    el.setAttribute("camera-orbit", "15deg 75deg 150%");
+    el.setAttribute("min-camera-orbit", "auto 55deg 130%");
+    el.setAttribute("max-camera-orbit", "auto 100deg 250%");
+    el.setAttribute("field-of-view", "28deg");
+    el.setAttribute("min-field-of-view", "22deg");
+    el.setAttribute("max-field-of-view", "36deg");
     el.setAttribute("interaction-prompt", "none");
     el.setAttribute("shadow-intensity", "1");
     el.setAttribute("shadow-softness", "0.8");
@@ -158,6 +163,14 @@ function MerchViewer({
       el.setAttribute("auto-rotate-delay", "0");
       el.setAttribute("rotation-per-second", "25deg");
     }
+    const mv = el as HTMLElement & { jumpCameraToGoal?: () => void; cameraOrbit?: string; loaded?: boolean };
+    const frame = () => {
+      mv.cameraOrbit = "15deg 75deg 150%";
+      mv.jumpCameraToGoal?.();
+    };
+    el.addEventListener("load", frame);
+    if (mv.loaded) frame();
+    return () => el.removeEventListener("load", frame);
   }, [src, poster, alt, reduced, ready]);
 
   if (!ready) {

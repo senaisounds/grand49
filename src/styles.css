@@ -15,12 +15,12 @@
   color-scheme: dark;
 }
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; overflow-x: hidden; overscroll-behavior-x: none; }
 html.gated { overflow: hidden; }
 body {
   margin: 0; background: var(--bg); color: var(--ink);
   font-family: var(--mono); font-size: 15px; line-height: 1.55;
-  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden; overscroll-behavior-x: none;
   padding-bottom: var(--mini-h);
 }
 img { display: block; max-width: 100%; }
@@ -186,6 +186,7 @@ button { font: inherit; color: inherit; }
 .hero-hint { position: absolute; z-index: 3; right: var(--pad); top: 50%; color: var(--mute); writing-mode: vertical-rl; margin: 0; font-size: 10px; }
 
 /* ticker */
+.ticker-clip { overflow: hidden; width: 100%; max-width: 100%; padding-block: 16px; margin-block: -16px; }
 .ticker { background: var(--red); color: #000; overflow: hidden; transform: rotate(-1.6deg) scale(1.03); margin: -14px 0 0; position: relative; z-index: 5; border-block: 2px solid #000; }
 .ticker-track { display: flex; width: max-content; animation: ticker 32s linear infinite; padding: 10px 0 8px; }
 .ticker span { font-family: var(--display); font-size: clamp(22px, 3vw, 34px); text-transform: uppercase; white-space: nowrap; letter-spacing: 0.03em; }
@@ -318,12 +319,15 @@ section { position: relative; }
     #f4f1ea;
 }
 .drop-anchor { position: absolute; top: 0; left: 0; width: 1px; height: 1px; }
+.drop { max-width: 100%; overflow-x: hidden; }
 .merch-hero {
   position: relative;
   padding: clamp(40px, 7vh, 72px) var(--pad) clamp(36px, 6vh, 64px);
   display: grid;
   justify-items: start;
   z-index: 1;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 .merch-sun {
   position: absolute;
@@ -401,6 +405,13 @@ section { position: relative; }
 .merch-via-note { color: #5c5850; margin: 14px 0 0; font-size: 11px; }
 .merch-via-note .link-u { text-transform: none; letter-spacing: 0.02em; color: #0a0a0a; }
 
+.merch-marquee-clip {
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  padding-block: 12px;
+  margin-block: -12px;
+}
 .merch-marquee {
   background: var(--red);
   color: #000;
@@ -449,7 +460,11 @@ section { position: relative; }
   color: #0a0a0a;
   display: grid;
   grid-template-rows: auto 1fr;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
 }
+.drop-grid { min-width: 0; max-width: 100%; }
 .merch-stage {
   perspective: 900px;
   padding: 8px;
@@ -540,11 +555,16 @@ section { position: relative; }
 .merch-flip-btn[aria-pressed="true"] .merch-flip-dot { background: var(--red); }
 
 .merch.is-3d .merch-stage {
-  padding: 0;
+  padding: 12px;
   perspective: none;
   aspect-ratio: 1;
   background: #fff;
   min-height: 0;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 .merch.is-3d model-viewer,
 .merch-viewer {
@@ -655,11 +675,13 @@ section { position: relative; }
 }
 .merch-looks-49 {
   font-family: var(--display);
-  font-size: clamp(180px, 38vw, 520px);
+  font-size: clamp(160px, 36vw, 520px);
   line-height: 0.75;
   color: #0a0a0a;
   opacity: 0.08;
   letter-spacing: -0.06em;
+  max-width: 100%;
+  overflow: hidden;
 }
 .merch-looks-en,
 .merch-looks-am {
@@ -675,8 +697,10 @@ section { position: relative; }
 }
 .merch-looks-en {
   top: 8%;
-  font-size: clamp(28px, 6vw, 86px);
+  font-size: clamp(22px, 5.4vw, 86px);
   opacity: 0.22;
+  max-width: 100%;
+  overflow: hidden;
 }
 .merch-looks-am {
   bottom: 6%;
@@ -792,6 +816,8 @@ section { position: relative; }
 .merch-ticket {
   display: flex;
   width: min(560px, 100%);
+  max-width: 100%;
+  box-sizing: border-box;
   background: #fff;
   color: #0a0a0a;
   text-decoration: none;
@@ -991,7 +1017,10 @@ section { position: relative; }
   .tapes-head .rail-btns { display: none; }
   .drop-grid { grid-template-columns: 1fr; }
   .merch-sun { width: 70vw; right: -18vw; top: -4%; }
+  .drop { --pad: 20px; }
   .merch-cta { width: 100%; justify-content: center; }
+  .drop-grid .merch { margin-inline: 0; }
+  .merch-ticket { box-shadow: 4px 5px 0 #0a0a0a; }
   .merch-fish-row {
     justify-content: flex-start;
     overflow-x: auto;
