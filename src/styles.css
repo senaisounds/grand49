@@ -319,14 +319,15 @@ section { position: relative; }
     #f4f1ea;
 }
 .drop-anchor { position: absolute; top: 0; left: 0; width: 1px; height: 1px; }
-.drop { max-width: 100%; overflow-x: hidden; }
+/* clip, not hidden: hidden makes overflow-y compute to auto and traps vertical swipes */
+.drop { max-width: 100%; overflow-x: clip; }
 .merch-hero {
   position: relative;
   padding: clamp(40px, 7vh, 72px) var(--pad) clamp(36px, 6vh, 64px);
   display: grid;
   justify-items: start;
   z-index: 1;
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100%;
 }
 .merch-sun {
@@ -468,6 +469,7 @@ section { position: relative; }
 .merch-stage {
   perspective: 900px;
   padding: 8px;
+  touch-action: pan-y;
 }
 .merch-tilt {
   position: relative;
@@ -572,6 +574,7 @@ section { position: relative; }
   width: 100%;
   height: 100%;
   background: #fff;
+  touch-action: pan-y;
   --poster-color: #ffffff;
   --progress-bar-color: var(--red);
   --progress-bar-height: 2px;
@@ -1027,6 +1030,7 @@ section { position: relative; }
     scroll-snap-type: x mandatory;
     padding-bottom: 12px;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
   }
   .merch-fish-orb, .merch-fish-orb.is-lead {
     width: 58vw;
@@ -1038,6 +1042,7 @@ section { position: relative; }
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     padding-bottom: 12px;
+    touch-action: pan-x pan-y;
   }
   .merch-look, .merch-look.is-featured {
     width: 46vw;

@@ -19,6 +19,8 @@ type ModelViewerProps = HTMLAttributes<HTMLElement> & {
   "shadow-softness"?: string;
   "environment-image"?: string;
   "touch-action"?: string;
+  "disable-zoom"?: boolean | "";
+  "disable-pan"?: boolean | "";
   "draco-decoder-path"?: string;
   "tone-mapping"?: string;
 };

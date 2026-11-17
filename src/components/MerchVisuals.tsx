@@ -177,7 +177,7 @@ export function HoodieSpin({ reduced }: { reduced: boolean }) {
   const [wrapRef, near] = useInView<HTMLDivElement>("500px");
   const [frame, setFrame] = useState(0);
   const [ready, setReady] = useState(false);
-  const drag = useRef<{ x: number; start: number } | null>(null);
+  const drag = useRef<{ x: number; y: number; start: number; mode: "pending" | "spin" | "scroll" } | null>(null);
 
   useEffect(() => {
     if (!near) return;
@@ -199,19 +199,35 @@ export function HoodieSpin({ reduced }: { reduced: boolean }) {
   }, [near]);
 
   const onDown = (e: ReactPointerEvent<HTMLDivElement>) => {
-    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-    drag.current = { x: e.clientX, start: frame };
+    // Don't capture yet — a vertical swipe must be free to scroll the page.
+    drag.current = { x: e.clientX, y: e.clientY, start: frame, mode: "pending" };
   };
   const onMove = (e: ReactPointerEvent<HTMLDivElement>) => {
     const d = drag.current;
-    if (!d) return;
+    if (!d || d.mode === "scroll") return;
+    const dx = e.clientX - d.x;
+    const dy = e.clientY - d.y;
+    if (d.mode === "pending") {
+      if (Math.abs(dx) <= 8 && Math.abs(dy) <= 8) return;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 8) {
+        d.mode = "spin";
+        try {
+          e.currentTarget.setPointerCapture(e.pointerId);
+        } catch {
+          /* capture optional */
+        }
+      } else {
+        d.mode = "scroll";
+        return;
+      }
+    }
     const w = e.currentTarget.getBoundingClientRect().width || 320;
     const delta = Math.round(((e.clientX - d.x) / w) * MERCH_SPIN_FRAMES);
     setFrame(((d.start - delta) % MERCH_SPIN_FRAMES + MERCH_SPIN_FRAMES) % MERCH_SPIN_FRAMES);
   };
   const onUp = (e: ReactPointerEvent<HTMLDivElement>) => {
     try {
-      e.currentTarget.releasePointerCapture(e.pointerId);
+      if (e.currentTarget.hasPointerCapture(e.pointerId)) e.currentTarget.releasePointerCapture(e.pointerId);
     } catch {
       /* already released */
     }

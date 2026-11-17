@@ -140,8 +140,6 @@ function MerchViewer({
     el.setAttribute("alt", alt);
     el.setAttribute("camera-controls", "");
     el.setAttribute("camera-orbit", "15deg 75deg 150%");
-    el.setAttribute("min-camera-orbit", "auto 55deg 130%");
-    el.setAttribute("max-camera-orbit", "auto 100deg 250%");
     el.setAttribute("field-of-view", "28deg");
     el.setAttribute("min-field-of-view", "22deg");
     el.setAttribute("max-field-of-view", "36deg");
@@ -151,6 +149,8 @@ function MerchViewer({
     el.setAttribute("environment-image", "neutral");
     el.setAttribute("exposure", "1");
     el.setAttribute("touch-action", "pan-y");
+    el.setAttribute("disable-zoom", "");
+    el.setAttribute("disable-pan", "");
     el.setAttribute("loading", "lazy");
     el.setAttribute("reveal", "auto");
     el.setAttribute("draco-decoder-path", DRACO_DECODER_PATH);
@@ -162,6 +162,15 @@ function MerchViewer({
       el.setAttribute("auto-rotate", "");
       el.setAttribute("auto-rotate-delay", "0");
       el.setAttribute("rotation-per-second", "25deg");
+    }
+    const touchUI = window.matchMedia("(hover: none)").matches;
+    if (touchUI) {
+      // lock polar angle so a vertical swipe cannot orbit — it scrolls the page
+      el.setAttribute("min-camera-orbit", "auto 75deg 130%");
+      el.setAttribute("max-camera-orbit", "auto 75deg 250%");
+    } else {
+      el.setAttribute("min-camera-orbit", "auto 55deg 130%");
+      el.setAttribute("max-camera-orbit", "auto 100deg 250%");
     }
     const mv = el as HTMLElement & { jumpCameraToGoal?: () => void; cameraOrbit?: string; loaded?: boolean };
     const frame = () => {
@@ -217,6 +226,7 @@ function MerchCard({
 
   const onMove = (e: ReactPointerEvent<HTMLDivElement>) => {
     if (reduced || is3d) return;
+    if (e.pointerType === "touch" || (typeof window !== "undefined" && window.matchMedia("(hover: none)").matches)) return;
     const wrap = e.currentTarget;
     const el = tiltRef.current;
     const glare = glareRef.current;
