@@ -32,7 +32,7 @@ Everything editable is in one file:
 | Tracks / videos | `TRACKS` | First entry is the featured release and the entry-gate song. `cover` overrides the YouTube thumbnail. |
 | Artists | `ARTISTS` | Typographic roster. Credits are derived from `TRACKS`. |
 | Shows | `SHOWS` | Sorted by date; past dates show "Done" automatically (Addis Ababa calendar date). |
-| Merch | `MERCH`, `MERCH_COLLECTION`, `MERCH_TAGLINE`, `MERCH_EMAIL` | ARAT ENA ZETENG collection photos in `/public/img/merch`. No prices — "Order / Inquire" mails `info@grand49.com`. |
+| Merch | `MERCH`, `MERCH_COLLECTION`, `MERCH_TAGLINE`, `MERCH_EMAIL` | ARAT ENA ZETENG collection photos in `/public/img/merch`. Tees, long sleeve and hoodie have interactive 3D models in `/public/models/merch` (snapback and beanie stay 2D). No prices — "Order / Inquire" mails `info@grand49.com`. |
 | Photos | `PHOTOS`, `HERO_IMAGE` | Image slots. Drop files in `public/img/` (webp, ~500–900px) and edit the paths. |
 
 ## Page

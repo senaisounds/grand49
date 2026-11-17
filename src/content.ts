@@ -128,6 +128,8 @@ export type MerchItem = {
   back?: string;
   /** White studio plate (do not treat the photo as a cutout). */
   studio?: boolean;
+  /** Interactive Draco GLB. Poster uses `front`. Snapback and beanie stay 2D. */
+  model?: string;
 };
 
 export const MERCH_COLLECTION = "ARAT ENA ZETENG";
@@ -141,10 +143,10 @@ export const MERCH_ORDER_HREF =
 export const MERCH: MerchItem[] = [
   { id: "cap", name: "Black Snapback", kind: "cap", colorway: "black", front: "/img/merch/cap-front.webp", back: "/img/merch/cap-back.webp" },
   { id: "beanie", name: "Black Beanie", kind: "beanie", colorway: "black", front: "/img/merch/beanie.webp" },
-  { id: "tee-white", name: "White Tee", kind: "tee", colorway: "white", front: "/img/merch/tee-white-front.webp", back: "/img/merch/tee-white-back.webp", studio: true },
-  { id: "tee-black", name: "Black Tee", kind: "tee", colorway: "black", front: "/img/merch/tee-black-front.webp", back: "/img/merch/tee-black-back.webp" },
-  { id: "ls-white", name: "White Long Sleeve", kind: "longsleeve", colorway: "white", front: "/img/merch/ls-white-front.webp", back: "/img/merch/ls-white-back.webp", studio: true },
-  { id: "hoodie-black", name: "Black Hoodie", kind: "hoodie", colorway: "black", front: "/img/merch/hoodie-black-front.webp", back: "/img/merch/hoodie-black-back.webp" },
+  { id: "tee-white", name: "White Tee", kind: "tee", colorway: "white", front: "/img/merch/tee-white-front.webp", back: "/img/merch/tee-white-back.webp", studio: true, model: "/models/merch/tee-white.glb" },
+  { id: "tee-black", name: "Black Tee", kind: "tee", colorway: "black", front: "/img/merch/tee-black-front.webp", back: "/img/merch/tee-black-back.webp", model: "/models/merch/tee-black.glb" },
+  { id: "ls-white", name: "White Long Sleeve", kind: "longsleeve", colorway: "white", front: "/img/merch/ls-white-front.webp", back: "/img/merch/ls-white-back.webp", studio: true, model: "/models/merch/longsleeve.glb" },
+  { id: "hoodie-black", name: "Black Hoodie", kind: "hoodie", colorway: "black", front: "/img/merch/hoodie-black-front.webp", back: "/img/merch/hoodie-black-back.webp", model: "/models/merch/hoodie.glb" },
 ];
 
 export type Photo = { src: string; alt: string; caption: string; position?: string };
