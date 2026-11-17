@@ -203,7 +203,7 @@ section { position: relative; }
 .shead-p { max-width: 36em; color: #c9c3b8; margin: 18px 0 0; }
 
 /* concrete texture used on darker panels */
-.latest, .hood, .drop {
+.latest, .hood {
   background:
     radial-gradient(90% 60% at 10% 0%, rgba(255, 255, 255, 0.035), transparent 60%),
     url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='c'><feTurbulence type='fractalNoise' baseFrequency='0.035' numOctaves='5' seed='7'/><feColorMatrix values='0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0.09 0'/></filter><rect width='100%' height='100%' filter='url(%23c)'/></svg>"),
@@ -304,22 +304,23 @@ section { position: relative; }
 .show-flyer img { width: 140px; height: 140px; object-fit: cover; filter: grayscale(1) contrast(1.2); border: 1px solid var(--line); transition: filter 0.4s, transform 0.4s; }
 .show-flyer .mono { color: var(--red); font-size: 11px; }
 
-/* merch drop — ARAT ENA ZETENG */
+/* merch drop — ARAT ENA ZETENG (white plate, dark type; rest of the site stays noir) */
 .drop {
   position: relative;
-  padding: clamp(80px, 13vh, 150px) 0 clamp(80px, 12vh, 140px);
-  border-top: 1px solid var(--line);
-  overflow: hidden;
+  padding: 0;
+  border-top: 0;
+  overflow: visible;
+  z-index: 2;
   scroll-margin-top: 72px;
+  color: #0a0a0a;
   background:
-    radial-gradient(55% 50% at 80% 0%, rgba(212, 20, 28, 0.16), transparent 60%),
-    radial-gradient(40% 40% at 10% 80%, rgba(212, 20, 28, 0.08), transparent 70%),
-    var(--bg);
+    radial-gradient(55% 50% at 80% 0%, rgba(212, 20, 28, 0.07), transparent 60%),
+    #f4f1ea;
 }
 .drop-anchor { position: absolute; top: 0; left: 0; width: 1px; height: 1px; }
 .merch-hero {
   position: relative;
-  padding: 0 var(--pad) clamp(28px, 5vw, 48px);
+  padding: clamp(40px, 7vh, 72px) var(--pad) clamp(36px, 6vh, 64px);
   display: grid;
   justify-items: start;
   z-index: 1;
@@ -333,12 +334,12 @@ section { position: relative; }
   opacity: 0.22;
   pointer-events: none;
   animation: merch-spin 48s linear infinite;
-  filter: contrast(1.05);
+  filter: invert(1) contrast(1.08);
 }
 @keyframes merch-spin { to { transform: rotate(360deg); } }
 .merch-kicker { margin: 0 0 16px; }
 .merch-title { margin: 0 0 18px; display: grid; gap: 8px; }
-.merch-am-wrap { position: relative; display: inline-block; }
+.merch-am-wrap { position: relative; display: inline-block; isolation: isolate; padding: 0.08em 0.04em 0.12em; margin: -0.08em -0.04em -0.12em; }
 .merch-am, .merch-am-bleed {
   font-family: "Noto Sans Ethiopic", var(--display);
   font-weight: 700;
@@ -346,32 +347,44 @@ section { position: relative; }
   line-height: 0.82;
   letter-spacing: 0;
   display: block;
+  color: #0a0a0a;
+  -webkit-text-fill-color: #0a0a0a;
+}
+.merch-am {
+  position: relative;
+  z-index: 1;
+  /* keep the fill solid; glitch lives on the pseudos + the bleed layer behind */
+  animation: none;
 }
 .merch-am-bleed {
   position: absolute;
   inset: 0;
+  z-index: 0;
   color: var(--red);
-  opacity: 0.45;
-  filter: blur(7px);
-  transform: translate(-3px, 2px);
+  -webkit-text-fill-color: var(--red);
+  opacity: 0.28;
+  filter: blur(8px);
+  transform: translate(-4px, 3px);
   animation: merch-ink 5s ease-in-out infinite;
   pointer-events: none;
 }
 @keyframes merch-ink {
-  0%, 100% { transform: translate(-3px, 2px); opacity: 0.4; filter: blur(7px); }
-  50% { transform: translate(4px, -2px); opacity: 0.7; filter: blur(4px); }
+  0%, 100% { transform: translate(-4px, 3px); opacity: 0.22; filter: blur(8px); }
+  50% { transform: translate(5px, -2px); opacity: 0.4; filter: blur(5px); }
 }
+.drop .merch-am.glitch::before { color: var(--red); -webkit-text-fill-color: var(--red); }
+.drop .merch-am.glitch::after { color: #0a0a0a; -webkit-text-fill-color: #0a0a0a; mix-blend-mode: normal; }
 .merch-en {
   font-family: var(--display);
   font-weight: 400;
   font-size: clamp(22px, 3.4vw, 42px);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--ink);
+  color: #0a0a0a;
 }
 .merch-tagline {
   max-width: 38em;
-  color: #cfc9be;
+  color: #3a3834;
   margin: 0 0 26px;
   font-size: 15px;
 }
@@ -385,19 +398,25 @@ section { position: relative; }
 @keyframes merch-cta-pulse {
   50% { box-shadow: 0 0 40px 2px rgba(212, 20, 28, 0.45); }
 }
-.merch-via-note { color: var(--mute); margin: 14px 0 0; font-size: 11px; }
-.merch-via-note .link-u { text-transform: none; letter-spacing: 0.02em; }
+.merch-via-note { color: #5c5850; margin: 14px 0 0; font-size: 11px; }
+.merch-via-note .link-u { text-transform: none; letter-spacing: 0.02em; color: #0a0a0a; }
 
 .merch-marquee {
   background: var(--red);
   color: #000;
   overflow: hidden;
   transform: rotate(-1.2deg) scale(1.04);
-  margin: 8px 0 clamp(36px, 6vw, 64px);
+  margin: 0;
   border-block: 2px solid #000;
   position: relative;
-  z-index: 2;
+  z-index: 4;
 }
+.merch-marquee-top { margin: -10px 0 0; }
+.merch-marquee-bottom {
+  margin: 0 0 -10px;
+  transform: rotate(1.2deg) scale(1.04);
+}
+.merch-marquee-bottom .merch-marquee-track { animation-direction: reverse; }
 .merch-marquee-track {
   display: flex;
   width: max-content;
@@ -420,13 +439,14 @@ section { position: relative; }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: clamp(14px, 2vw, 26px);
-  padding: 0 var(--pad);
+  padding: 0 var(--pad) clamp(44px, 7vh, 80px);
   position: relative;
   z-index: 1;
 }
 .merch {
-  background: var(--bg-2);
-  border: 1px solid var(--line);
+  background: #fff;
+  border: 1px solid rgba(10, 10, 10, 0.14);
+  color: #0a0a0a;
   display: grid;
   grid-template-rows: auto 1fr;
 }
@@ -461,49 +481,49 @@ section { position: relative; }
   display: grid;
   place-items: center;
   overflow: hidden;
-  background: radial-gradient(70% 60% at 50% 45%, #232323, #0b0b0b 75%);
+  background: #fff;
 }
 .merch-art::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 22px);
+  background: repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.035) 0 1px, transparent 1px 22px);
   pointer-events: none;
 }
 .merch-art img {
   width: 86%;
   height: 86%;
   object-fit: contain;
-  filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.55));
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.18));
   pointer-events: none;
 }
 .merch-art.is-studio img {
-  width: 88%;
-  height: 88%;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  background: #fff;
-  filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.45));
+  background: transparent;
+  filter: none;
 }
 .merch-glare {
   position: absolute;
   inset: 0;
   opacity: 0;
   pointer-events: none;
-  mix-blend-mode: screen;
+  mix-blend-mode: overlay;
   transition: opacity 0.2s;
   border-radius: 0;
   z-index: 3;
 }
 .merch-meta { padding: 14px 20px 20px; display: grid; gap: 6px; align-content: start; }
 .merch-n { color: var(--red); font-size: 11px; }
-.merch-name { font-family: var(--display); font-weight: 400; font-size: clamp(26px, 2.5vw, 38px); line-height: 1; margin: 0; text-transform: uppercase; }
-.merch-status { color: var(--mute); margin: 0; font-size: 11px; }
+.merch-name { font-family: var(--display); font-weight: 400; font-size: clamp(26px, 2.5vw, 38px); line-height: 1; margin: 0; text-transform: uppercase; color: #0a0a0a; }
+.merch-status { color: #5c5850; margin: 0; font-size: 11px; }
 .merch-flip-btn {
   justify-self: start;
   margin-top: 6px;
   background: none;
-  border: 1px solid var(--line);
-  color: var(--ink);
+  border: 1px solid rgba(10, 10, 10, 0.22);
+  color: #0a0a0a;
   padding: 8px 12px;
   cursor: pointer;
   display: inline-flex;
@@ -521,7 +541,7 @@ section { position: relative; }
 
 /* booking */
 .booking {
-  padding: clamp(90px, 16vh, 180px) var(--pad); overflow: hidden; border-top: 1px solid var(--line);
+  padding: clamp(90px, 16vh, 180px) var(--pad); overflow: hidden; border-top: 0;
   background:
     radial-gradient(60% 70% at 85% 100%, rgba(212, 20, 28, 0.35), transparent 70%),
     radial-gradient(40% 50% at 0% 0%, rgba(212, 20, 28, 0.12), transparent 70%),

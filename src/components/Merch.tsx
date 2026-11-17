@@ -12,11 +12,31 @@ import { usePrefersReducedMotion } from "../lib/hooks";
 
 const MARQUEE = ["WE ASK FOR FORGIVENESS, NOT PERMISSION", "ADDIS ABABA, 49", MERCH_COLLECTION_AM, MERCH_COLLECTION];
 
+function MerchMarquee({ className = "" }: { className?: string }) {
+  return (
+    <div className={`merch-marquee ${className}`.trim()} aria-hidden>
+      <div className="merch-marquee-track">
+        {Array.from({ length: 2 }, (_, copy) => (
+          <span key={copy} className="merch-marquee-row">
+            {MARQUEE.map((w, i) => (
+              <span key={`${copy}-${i}`} className={/[\u1200-\u137F]/.test(w) ? "eth" : ""}>
+                {w}
+                <i>✕</i>
+              </span>
+            ))}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function MerchDrop() {
   const reduced = usePrefersReducedMotion();
   return (
     <section id="merch" className="drop" aria-labelledby="merch-title">
       <span id="drop" className="drop-anchor" aria-hidden />
+      <MerchMarquee className="merch-marquee-top" />
 
       <div className="merch-hero" data-reveal>
         <img
@@ -51,26 +71,13 @@ export function MerchDrop() {
         </p>
       </div>
 
-      <div className="merch-marquee" aria-hidden>
-        <div className="merch-marquee-track">
-          {Array.from({ length: 2 }, (_, copy) => (
-            <span key={copy} className="merch-marquee-row">
-              {MARQUEE.map((w, i) => (
-                <span key={`${copy}-${i}`} className={/[\u1200-\u137F]/.test(w) ? "eth" : ""}>
-                  {w}
-                  <i>✕</i>
-                </span>
-              ))}
-            </span>
-          ))}
-        </div>
-      </div>
-
       <div className="drop-grid">
         {MERCH.map((item, i) => (
           <MerchCard key={item.id} item={item} index={i} reduced={reduced} />
         ))}
       </div>
+
+      <MerchMarquee className="merch-marquee-bottom" />
     </section>
   );
 }
@@ -140,7 +147,7 @@ function MerchCard({ item, index, reduced }: { item: MerchItem; index: number; r
     el.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
     if (glare) {
       glare.style.opacity = "1";
-      glare.style.background = `radial-gradient(circle at ${px * 100}% ${py * 100}%, rgba(236, 230, 218, 0.32), transparent 55%)`;
+      glare.style.background = `radial-gradient(circle at ${px * 100}% ${py * 100}%, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.12) 28%, rgba(20, 12, 10, 0.12) 70%)`;
     }
   };
 
