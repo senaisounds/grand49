@@ -581,6 +581,318 @@ section { position: relative; }
   text-transform: uppercase;
 }
 
+/* Higgsfield merch visuals — fisheye strip, lookbook, 360 spin, boarding-pass ticket */
+.merch-fish,
+.merch-looks,
+.merch-spin {
+  padding: 0 var(--pad) clamp(36px, 6vh, 64px);
+  position: relative;
+  z-index: 1;
+}
+.merch-fish { overflow: visible; }
+.merch-fish-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(6px, 1.2vw, 14px);
+  padding: 28px 8px 16px;
+  min-height: clamp(200px, 28vw, 300px);
+  overflow: visible;
+}
+.merch-fish-orb {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(118px, 13vw, 188px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #111;
+  box-shadow: 0 0 0 3px #0a0a0a, 0 0 0 5px var(--red);
+  transform-origin: center center;
+  transition: transform 0.35s ease, filter 0.35s ease;
+  will-change: transform;
+}
+.merch-fish-orb.is-lead {
+  width: clamp(148px, 17vw, 240px);
+  box-shadow: 0 0 0 4px #0a0a0a, 0 0 0 7px var(--red);
+}
+.merch-fish-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  display: block;
+}
+.merch-fish-cap {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  margin: 0;
+  color: #fff;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.55);
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+.merch-looks-stage {
+  position: relative;
+  isolation: isolate;
+  min-height: clamp(420px, 72vh, 760px);
+  overflow: hidden;
+}
+.merch-looks-type {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  overflow: hidden;
+}
+.merch-looks-49 {
+  font-family: var(--display);
+  font-size: clamp(180px, 38vw, 520px);
+  line-height: 0.75;
+  color: #0a0a0a;
+  opacity: 0.08;
+  letter-spacing: -0.06em;
+}
+.merch-looks-en,
+.merch-looks-am {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--display);
+  text-transform: uppercase;
+  color: var(--red);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+.merch-looks-en {
+  top: 8%;
+  font-size: clamp(28px, 6vw, 86px);
+  opacity: 0.22;
+}
+.merch-looks-am {
+  bottom: 6%;
+  font-family: "Noto Sans Ethiopic", var(--display);
+  font-size: clamp(22px, 4.5vw, 64px);
+  opacity: 0.2;
+}
+.merch-looks-row {
+  position: relative;
+  z-index: 1;
+  list-style: none;
+  margin: 0;
+  padding: 12px 0 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(4px, 1vw, 16px);
+  min-height: clamp(420px, 72vh, 760px);
+}
+.merch-look {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(92px, 14vw, 180px);
+  filter: drop-shadow(0 18px 18px rgba(0, 0, 0, 0.28));
+}
+.merch-look.is-featured { width: clamp(120px, 18vw, 230px); z-index: 2; }
+.merch-look img {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+}
+.merch-hot {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  z-index: 3;
+}
+.merch-hot-dot {
+  display: block;
+  width: 14px;
+  height: 14px;
+  margin: 4px auto 0;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 5px #0a0a0a;
+  animation: merch-hot-pulse 2.2s ease-in-out infinite;
+}
+@keyframes merch-hot-pulse {
+  50% { box-shadow: 0 0 0 3px #fff, 0 0 0 5px #0a0a0a, 0 0 0 12px rgba(212, 20, 28, 0.28); }
+}
+.merch-hot-label {
+  position: absolute;
+  left: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #0a0a0a;
+  color: #fff;
+  padding: 6px 10px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s;
+}
+.merch-hot:hover .merch-hot-label,
+.merch-hot:focus-visible .merch-hot-label,
+.merch-hot.is-open .merch-hot-label {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.merch-spin { display: grid; justify-items: center; }
+.merch-spin-stage {
+  width: min(420px, 100%);
+  background: #ece9e2;
+  cursor: ew-resize;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.merch-spin-stage img {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+}
+.merch-spin-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 10px;
+}
+.merch-spin-btn {
+  background: none;
+  border: 1px solid rgba(10, 10, 10, 0.22);
+  color: #0a0a0a;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.merch-spin-btn:hover { border-color: var(--red); color: var(--red); }
+
+.merch-ticket {
+  display: flex;
+  width: min(560px, 100%);
+  background: #fff;
+  color: #0a0a0a;
+  text-decoration: none;
+  border: 1px solid #0a0a0a;
+  box-shadow: 6px 8px 0 #0a0a0a;
+  transform: rotate(-1.1deg);
+  transform-origin: left center;
+  transition: transform 0.18s ease-out, box-shadow 0.18s;
+  position: relative;
+  isolation: isolate;
+}
+.merch-ticket:hover { box-shadow: 8px 10px 0 var(--red); }
+.merch-ticket-main {
+  flex: 1;
+  padding: 16px 18px 14px;
+  min-width: 0;
+}
+.merch-ticket-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: #5c5850;
+}
+.merch-ticket-name {
+  display: block;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(22px, 3vw, 32px);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 6px 0 12px;
+  line-height: 1;
+}
+.merch-ticket-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+  font-size: 14px;
+  margin: 0 0 14px;
+}
+.merch-ticket-grid .mono {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5c5850;
+  margin-bottom: 2px;
+}
+.merch-ticket-board {
+  display: inline-block;
+  background: var(--red);
+  color: #fff;
+  padding: 8px 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+.merch-ticket-mail {
+  display: block;
+  margin-top: 8px;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: #5c5850;
+}
+.merch-ticket-stub {
+  width: 104px;
+  flex: 0 0 104px;
+  border-left: 2px dashed #0a0a0a;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 6px;
+  background:
+    radial-gradient(circle at 0 0, #f4f1ea 8px, transparent 8.5px),
+    radial-gradient(circle at 0 100%, #f4f1ea 8px, transparent 8.5px);
+  padding: 12px 8px;
+  text-align: center;
+}
+.merch-ticket-49 {
+  font-family: var(--display);
+  font-size: 56px;
+  line-height: 0.8;
+  color: var(--red);
+  letter-spacing: -0.04em;
+}
+.merch-ticket-city {
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  writing-mode: horizontal-tb;
+}
+.merch-ticket-foot {
+  display: grid;
+  justify-items: center;
+  padding: 0 var(--pad) clamp(48px, 8vh, 80px);
+  position: relative;
+  z-index: 1;
+}
+
 /* booking */
 .booking {
   padding: clamp(90px, 16vh, 180px) var(--pad); overflow: hidden; border-top: 0;
@@ -680,6 +992,31 @@ section { position: relative; }
   .drop-grid { grid-template-columns: 1fr; }
   .merch-sun { width: 70vw; right: -18vw; top: -4%; }
   .merch-cta { width: 100%; justify-content: center; }
+  .merch-fish-row {
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .merch-fish-orb, .merch-fish-orb.is-lead {
+    width: 58vw;
+    scroll-snap-align: center;
+  }
+  .merch-looks-row {
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 12px;
+  }
+  .merch-look, .merch-look.is-featured {
+    width: 46vw;
+    scroll-snap-align: center;
+  }
+  .merch-ticket { width: 100%; transform: rotate(0deg); }
+  .merch-ticket-stub { width: 84px; flex-basis: 84px; }
+  .merch-ticket-49 { font-size: 44px; }
   .roster-row { grid-template-columns: 34px 1fr; }
   .roster-meta { grid-column: 2; align-items: flex-start; gap: 10px; margin-top: -4px; }
   .roster-credits { text-align: left; font-size: 10px; }
@@ -708,8 +1045,9 @@ section { position: relative; }
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
   .grain { animation: none; }
   [data-reveal] { opacity: 1; transform: none; }
-  .merch-sun, .merch-marquee-track, .merch-am-bleed, .merch-cta { animation: none !important; }
-  .merch-tilt, .merch-cta { transform: none !important; }
+  .merch-sun, .merch-marquee-track, .merch-am-bleed, .merch-cta, .merch-hot-dot { animation: none !important; }
+  .merch-tilt, .merch-cta, .merch-ticket, .merch-fish-orb { transform: none !important; }
+  .merch-fish-orb { filter: none !important; }
 }
 
 /* presave banner */

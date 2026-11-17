@@ -149,6 +149,81 @@ export const MERCH: MerchItem[] = [
   { id: "hoodie-black", name: "Black Hoodie", kind: "hoodie", colorway: "black", front: "/img/merch/hoodie-black-front.webp", back: "/img/merch/hoodie-black-back.webp", model: "/models/merch/hoodie.glb" },
 ];
 
+/** Higgsfield editorial stills, cutouts and 360 frames for the merch section. */
+export const MERCH_FISHEYE_LOOP = {
+  webm: "/img/merch/higgs/fisheye-loop.webm",
+  mp4: "/img/merch/higgs/fisheye-loop.mp4",
+  poster: "/img/merch/higgs/fisheye-hoodie.webp",
+};
+
+export type MerchFisheye = { id: string; name: string; src: string; itemId: string };
+
+export const MERCH_FISHEYE: MerchFisheye[] = [
+  { id: "loop", name: "Black Hoodie", src: MERCH_FISHEYE_LOOP.poster, itemId: "hoodie-black" },
+  { id: "hoodie", name: "Black Hoodie", src: "/img/merch/higgs/fisheye-hoodie.webp", itemId: "hoodie-black" },
+  { id: "tee-black", name: "Black Tee", src: "/img/merch/higgs/fisheye-black-tee.webp", itemId: "tee-black" },
+  { id: "tee-white", name: "White Tee", src: "/img/merch/higgs/fisheye-white-tee.webp", itemId: "tee-white" },
+  { id: "ls-white", name: "White Long Sleeve", src: "/img/merch/higgs/fisheye-longsleeve.webp", itemId: "ls-white" },
+];
+
+export type MerchHotspot = { name: string; itemId: string; x: number; y: number };
+export type MerchLook = { id: string; name: string; src: string; itemId: string; featured?: boolean; spots: MerchHotspot[] };
+
+export const MERCH_LOOKS: MerchLook[] = [
+  {
+    id: "look-black-tee",
+    name: "Black Tee",
+    src: "/img/merch/higgs/look-black-tee-cutout.webp",
+    itemId: "tee-black",
+    spots: [
+      { name: "Black Beanie", itemId: "beanie", x: 50, y: 8 },
+      { name: "Black Tee", itemId: "tee-black", x: 50, y: 32 },
+    ],
+  },
+  {
+    id: "look-hoodie-front",
+    name: "Black Hoodie",
+    src: "/img/merch/higgs/look-hoodie-front-cutout.webp",
+    itemId: "hoodie-black",
+    featured: true,
+    spots: [
+      { name: "Black Snapback", itemId: "cap", x: 50, y: 8.5 },
+      { name: "Black Hoodie", itemId: "hoodie-black", x: 62, y: 30 },
+    ],
+  },
+  {
+    id: "look-white-tee",
+    name: "White Tee",
+    src: "/img/merch/higgs/look-white-tee-cutout.webp",
+    itemId: "tee-white",
+    spots: [
+      { name: "Black Snapback", itemId: "cap", x: 50, y: 8 },
+      { name: "White Tee", itemId: "tee-white", x: 50, y: 33 },
+    ],
+  },
+  {
+    id: "look-longsleeve",
+    name: "White Long Sleeve",
+    src: "/img/merch/higgs/look-longsleeve-cutout.webp",
+    itemId: "ls-white",
+    spots: [
+      { name: "Black Beanie", itemId: "beanie", x: 50, y: 8 },
+      { name: "White Long Sleeve", itemId: "ls-white", x: 50, y: 32 },
+    ],
+  },
+  {
+    id: "look-hoodie-back",
+    name: "Black Hoodie",
+    src: "/img/merch/higgs/look-hoodie-back-cutout.webp",
+    itemId: "hoodie-black",
+    spots: [{ name: "Black Hoodie", itemId: "hoodie-black", x: 50, y: 30 }],
+  },
+];
+
+export const MERCH_SPIN_FRAMES = 48;
+export const merchSpinSrc = (i: number) =>
+  `/img/merch/higgs/spin/f_${String(((i % MERCH_SPIN_FRAMES) + MERCH_SPIN_FRAMES) % MERCH_SPIN_FRAMES + 1).padStart(2, "0")}.webp`;
+
 export type Photo = { src: string; alt: string; caption: string; position?: string };
 
 /** Photo slots for the "Frames" gallery. Swap files in /public/img and edit here. */

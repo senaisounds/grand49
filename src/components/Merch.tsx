@@ -10,6 +10,7 @@ import {
 } from "../content";
 import { useInView, usePrefersReducedMotion } from "../lib/hooks";
 import { DRACO_DECODER_PATH, ensureModelViewer } from "../lib/model-viewer";
+import { FisheyeStrip, HoodieSpin, Lookbook, TicketCta } from "./MerchVisuals";
 
 const MARQUEE = ["WE ASK FOR FORGIVENESS, NOT PERMISSION", "ADDIS ABABA, 49", MERCH_COLLECTION_AM, MERCH_COLLECTION];
 
@@ -91,13 +92,15 @@ export function MerchDrop() {
           <span className="merch-en">{MERCH_COLLECTION}</span>
         </h2>
         <p className="merch-tagline">{MERCH_TAGLINE}</p>
-        <MagneticCta href={MERCH_ORDER_HREF} reduced={reduced}>
-          Order / Inquire
-        </MagneticCta>
+        <TicketCta reduced={reduced} />
         <p className="mono merch-via-note">
           DM or email to order · <a className="link-u" href={MERCH_ORDER_HREF}>{MERCH_EMAIL}</a>
         </p>
       </div>
+
+      <FisheyeStrip reduced={reduced} />
+      <Lookbook />
+      <HoodieSpin reduced={reduced} />
 
       <div className="drop-grid">
         {MERCH.map((item, i) => (
@@ -105,45 +108,12 @@ export function MerchDrop() {
         ))}
       </div>
 
+      <div className="merch-ticket-foot" data-reveal>
+        <TicketCta reduced={reduced} />
+      </div>
+
       <MerchMarquee className="merch-marquee-bottom" />
     </section>
-  );
-}
-
-function MagneticCta({
-  href,
-  reduced,
-  children,
-}: {
-  href: string;
-  reduced: boolean;
-  children: React.ReactNode;
-}) {
-  const ref = useRef<HTMLAnchorElement>(null);
-  const reset = () => {
-    const el = ref.current;
-    if (el) el.style.transform = "";
-  };
-  const onMove = (e: ReactPointerEvent<HTMLAnchorElement>) => {
-    if (reduced) return;
-    const el = ref.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    const x = e.clientX - (r.left + r.width / 2);
-    const y = e.clientY - (r.top + r.height / 2);
-    el.style.transform = `translate(${x * 0.32}px, ${y * 0.38}px)`;
-  };
-  return (
-    <a
-      ref={ref}
-      className="btn btn-red merch-cta"
-      href={href}
-      onPointerMove={onMove}
-      onPointerLeave={reset}
-      onPointerUp={reset}
-    >
-      {children}
-    </a>
   );
 }
 
@@ -256,6 +226,7 @@ function MerchCard({
 
   return (
     <article
+      id={`merch-item-${item.id}`}
       className={`merch${item.studio ? " is-studio" : ""}${is3d ? " is-3d" : ""}`}
       aria-labelledby={labelId}
       data-reveal
